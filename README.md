@@ -47,3 +47,65 @@ git clone https://github.com/berat-552/LibraryManagementAPI.git
 The API is documented using Swagger, providing a UI to explore all endpoints and try them out.
 
 - Swagger UI: Available at https://localhost:7147/swagger
+
+## Endpoints
+
+#### Get all Authors
+```bash
+GET /api/v1/authors
+```
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Author Name",
+    "biography": "Short biography"
+  }
+]
+```
+
+#### Create a new Author
+```bash
+POST /api/v1/authors
+```
+
+Request:
+```json
+{
+  "name": "Jane Doe",
+  "biography": "Jane Doe is an acclaimed author known for her updated works in contemporary fiction."
+}
+```
+
+Response:
+```json
+{
+  "id": 2,
+  "name": "New Author",
+  "biography": "Biography of the new author"
+}
+```
+
+#### Get an Author by ID
+```bash
+GET /api/v1/authors/{id}
+```
+
+#### Update an Author
+
+Request:
+```json
+{
+  "id": 1,
+  "name": "Updated Author Name",
+  "biography": "Updated biography"
+}
+```
+
+#### Delete an Author
+```bash
+DELETE /api/v1/authors/{id}
+```
