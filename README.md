@@ -15,6 +15,40 @@ Clone the repository and run using Visual Studio 2022
 git clone https://github.com/berat-552/LibraryManagementAPI.git
 ```
 
+## Database Setup (SQLite)
+To set up the database, you will need to use Entiy Framework Core migrations. Here are the steps:
+
+#### Add Initial Migration
+This command creates a migration script for the initial database schema.
+```bash
+dotnet ef migrations ef add initialCreate
+```
+
+#### Apply Migrations
+This command applies all pending migrations to the database, creating or updating the database schema.
+```bash
+dotnet ef database update
+```
+
+#### Update Database with New Migrations
+Whenever you make changes to your models, create a new migration and update the database.
+```bash
+# Create a new migration
+dotnet ef migrations add <MigrationName>
+
+# Apply the new migration
+dotnet ef database update
+```
+
+#### Remove the Most Recent Migration
+If you need to remove the most recent migration that has not yet been applied to the database, use the following command:
+```bash
+dotnet ef migrations remove
+```
+This command will delete the most recent migration files and update the model snapshot to reflect the state before the migration.
+
+#### 
+
 ## Models
 
 ### Book
