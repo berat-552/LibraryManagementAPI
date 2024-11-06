@@ -22,6 +22,19 @@ public class AuthorsController : ControllerBase
         return await _context.Authors.ToListAsync();
     }
 
+    [HttpGet("quantity")]
+    public async Task<ActionResult<Author>> GetAuthorsByQuantity(int? quantity)
+    {
+        var authors = await _context.Authors.ToListAsync();
+
+        if (quantity.HasValue)
+        {
+            authors = authors.Take(quantity.Value).ToList();
+        }
+
+        return Ok(authors);
+    }
+
     [HttpPost]
     public async Task<ActionResult<Author>> CreateAuthor(Author author)
     {
