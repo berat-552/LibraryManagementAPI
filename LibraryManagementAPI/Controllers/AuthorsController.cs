@@ -52,11 +52,19 @@ public class AuthorsController : ControllerBase
             return BadRequest();
         }
 
+        // Detach the existing entity if it's already being tracked
+        var existingAuthor = await _context.Authors.FindAsync(id);
+        if (existingAuthor != null)
+        {
+            _context.Entry(existingAuthor).State = EntityState.Detached;
+        }
+
         _context.Entry(author).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
         return Ok(author);
     }
+
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAuthor(int id)
