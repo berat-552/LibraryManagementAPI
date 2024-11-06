@@ -22,8 +22,5 @@ public class LibraryContext : DbContext
             .HasMany(b => b.Loans)
             .WithOne(l => l.Book)
             .HasForeignKey(l => l.BookId);
-
-        // Seed data
-        
     }
 }
