@@ -7,7 +7,6 @@ public class LibraryContext : DbContext
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Book> Books { get; set; }
-    public DbSet<Loan> Loans { get; set; }
 
     public LibraryContext(DbContextOptions<LibraryContext> options) : base(options) { }
 
@@ -15,12 +14,7 @@ public class LibraryContext : DbContext
     {
         modelBuilder.Entity<Author>()
             .HasMany(a => a.Books)
-            .WithOne(b => b.Author)
+            .WithOne()
             .HasForeignKey(b => b.AuthorId);
-
-        modelBuilder.Entity<Book>()
-            .HasMany(b => b.Loans)
-            .WithOne(l => l.Book)
-            .HasForeignKey(l => l.BookId);
     }
 }
