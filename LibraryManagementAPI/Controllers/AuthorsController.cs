@@ -22,6 +22,19 @@ public class AuthorsController : ControllerBase
         return await _context.Authors.ToListAsync();
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Author>> GetAuthorById(int id)
+    {
+        var author = await _context.Authors.FindAsync(id);
+
+        if (author == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(author);
+    }
+
     [HttpGet("quantity")]
     public async Task<ActionResult<Author>> GetAuthorsByQuantity(int? quantity)
     {
@@ -36,7 +49,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Author>> CreateAuthor(Author author)
+    public async Task<ActionResult<Author>> CreateAuthor([FromBody] Author author)
     {
         _context.Authors.Add(author);
         await _context.SaveChangesAsync();
@@ -44,21 +57,8 @@ public class AuthorsController : ControllerBase
         return CreatedAtAction(nameof(GetAuthorById), new { id = author.Id }, author);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Author>> GetAuthorById(int id)
-    {
-        var author = await _context.Authors.FindAsync(id);
-
-        if (author == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(author);
-    }
-
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAuthor(int id, Author author)
+    public async Task<IActionResult> UpdateAuthor(int id, [FromBody] Author author)
     {
         if (id != author.Id)
         {
