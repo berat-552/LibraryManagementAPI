@@ -63,18 +63,41 @@ public class AuthorsControllerTests
     [Fact]
     public async Task GetAuthorById_ReturnsAuthor()
     {
-        var foundAuthor = await _controller.GetAuthorById(1);
+        var id = 1;
+        var result = await _controller.GetAuthorById(id);
 
-        Assert.NotNull(foundAuthor);
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var foundAuthor = Assert.IsType<Author>(okResult.Value);
+
+        Assert.NotNull(result);
+        Assert.Equal(id, foundAuthor.Id);
         Assert.NotEmpty(_context.Authors);
+    }
+
+    [Fact]
+    public async Task CreateAuthor_ReturnsAuthor()
+    {
+        var authorToCreate = new Author
+        {
+            AuthorName = "John Doe",
+            Biography = "John Doe is a prolific author known for his engaging novels."
+        };
+
+        var result = await _controller.CreateAuthor(authorToCreate);
+        var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+        var createdAuthor = Assert.IsType<Author>(createdResult.Value);
+
+        Assert.NotNull(createdAuthor);
+        Assert.Equal(authorToCreate.AuthorName, createdAuthor.AuthorName);
+        Assert.Equal(authorToCreate.Biography, createdAuthor.Biography);
     }
 
     [Fact]
     public async Task UpdateAuthor_ReturnsOkResult_WhenAuthorIsUpdated()
     {
+        var id = 1;
         var authorToUpdate = Author.GetTestAuthors().First();
-        var result = await _controller.UpdateAuthor(1, authorToUpdate);
-
+        var result = await _controller.UpdateAuthor(id, authorToUpdate);
         var okResult = Assert.IsType<OkObjectResult>(result);
         var updatedAuthor = Assert.IsType<Author>(okResult.Value);
 
