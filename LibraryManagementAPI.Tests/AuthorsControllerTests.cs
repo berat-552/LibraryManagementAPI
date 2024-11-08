@@ -11,7 +11,7 @@ public class AuthorsControllerTests
 {
     private readonly AuthorsController _controller;
     private readonly LibraryContext _context;
-    private readonly ITestOutputHelper _output;
+    private readonly ITestOutputHelper _output; // Debug purposes
 
     public AuthorsControllerTests(ITestOutputHelper output)
     {
