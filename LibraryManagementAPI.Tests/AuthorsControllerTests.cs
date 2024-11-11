@@ -16,9 +16,11 @@ public class AuthorsControllerTests
 
     public AuthorsControllerTests(ITestOutputHelper output)
     {
+        var dbName = Guid.NewGuid().ToString();
+
         // Configure in memory database options
         var options = new DbContextOptionsBuilder<LibraryContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .UseInMemoryDatabase(databaseName: dbName)
             .Options;
 
         // Initialize the database context with the in-memory options
