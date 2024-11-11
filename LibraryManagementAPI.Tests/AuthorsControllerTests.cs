@@ -118,5 +118,6 @@ public class AuthorsControllerTests
 
         Assert.NotNull(noContentResult);
         Assert.Null(deletedAuthor);
+        Assert.Equal(StatusCodes.Status204NoContent, noContentResult.StatusCode);
     }
 }
