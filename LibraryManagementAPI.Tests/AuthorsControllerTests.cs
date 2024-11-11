@@ -98,6 +98,9 @@ public class AuthorsControllerTests
     {
         var id = 1;
         var authorToUpdate = Author.GetTestAuthors().First();
+
+        authorToUpdate.AuthorName = "Revised Author Name";
+
         var result = await _controller.UpdateAuthor(id, authorToUpdate);
         var okResult = Assert.IsType<OkObjectResult>(result);
         var updatedAuthor = Assert.IsType<Author>(okResult.Value);
