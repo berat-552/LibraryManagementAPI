@@ -1,6 +1,7 @@
 using LibraryManagementAPI.Controllers;
 using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit.Abstractions;
@@ -103,6 +104,7 @@ public class AuthorsControllerTests
 
         Assert.Equal(authorToUpdate.Id, updatedAuthor.Id);
         Assert.Equal(authorToUpdate.AuthorName, updatedAuthor.AuthorName);
+        Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
     }
 
     [Fact]
