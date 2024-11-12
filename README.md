@@ -1,10 +1,10 @@
 # LibraryManagementAPI
 
-A RESTful ASP.NET Core Web API for managing books, authors, and loan records in a library.
+A RESTful ASP.NET Core Web API for managing books and authors in a library.
 
 ## Features
 
-- Manage books, authors, and loans.
+- Manage books and authors.
 
 ## Installation
 
@@ -55,27 +55,18 @@ This command will delete the most recent migration files and update the model sn
 | Field           | Type       | Description                    |
 |-----------------|------------|--------------------------------|
 | `Id`            | `int`      | Unique identifier for the book |
-| `Title`         | `string`   | Title of the book              |
+| `BookTitle`         | `string`   | Title of the book              |
 | `ISBN`          | `string`   | International Standard Book Number|
 | `Genre`         | `string`   | Genre of the book              |
 | `AuthorId`      | `int`      | ID of the author               |
 | `PublishedDate` | `DateTime` | Date the book was published    |
-| `IsAvailable`   | `bool`     | Availability status            |
 
 ### Author
 | Field       | Type     | Description                        |
 |-------------|----------|------------------------------------|
 | `Id`        | `int`    | Unique identifier for the author   |
-| `Name`      | `string` | Name of the author                 |
+| `AuthorName`      | `string` | Name of the author                 |
 | `Biography` | `string` | Short biography of the author      |
-
-### Loan
-| Field        | Type        | Description                           |
-|--------------|-------------|---------------------------------------|
-| `Id`         | `int`       | Unique identifier for the loan        |
-| `BookId`     | `int`       | ID of the book being loaned           |
-| `LoanDate`   | `DateTime`  | Date when the book was loaned         |
-| `ReturnDate` | `DateTime?` | Date when the book was returned, if returned |
 
 ## API Documentation
 The API is documented using Swagger, providing a UI to explore all endpoints and try them out.
@@ -89,38 +80,9 @@ The API is documented using Swagger, providing a UI to explore all endpoints and
 GET /api/v1/authors
 ```
 
-Response:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Author Name",
-    "biography": "Short biography"
-  }
-]
-```
-
 #### Create a new Author
 ```bash
 POST /api/v1/authors
-```
-
-Request:
-```json
-{
-  "name": "Jane Doe",
-  "biography": "Jane Doe is an acclaimed author known for her updated works in contemporary fiction."
-}
-```
-
-Response:
-```json
-{
-  "id": 2,
-  "name": "New Author",
-  "biography": "Biography of the new author"
-}
 ```
 
 #### Get an Author by ID
@@ -129,14 +91,8 @@ GET /api/v1/authors/{id}
 ```
 
 #### Update an Author
-
-Request:
-```json
-{
-  "id": 1,
-  "name": "Updated Author Name",
-  "biography": "Updated biography"
-}
+```bash
+PUT /api/v1/authors/{id}
 ```
 
 #### Delete an Author
