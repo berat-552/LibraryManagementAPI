@@ -78,7 +78,6 @@ public class AuthorsController : ControllerBase
         return Ok(author);
     }
 
-
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAuthor(int id)
     {
