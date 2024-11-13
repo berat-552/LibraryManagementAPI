@@ -7,14 +7,9 @@ namespace LibraryManagementAPI.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class BooksController : ControllerBase
+public class BooksController(LibraryContext context) : ControllerBase
 {
-    private readonly LibraryContext _context;
-
-    public BooksController(LibraryContext context)
-    {
-        _context = context;
-    }
+    private readonly LibraryContext _context = context;
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Book>>> GetBooks()

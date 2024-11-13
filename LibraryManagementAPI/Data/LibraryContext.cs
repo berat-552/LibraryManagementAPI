@@ -3,12 +3,10 @@ using LibraryManagementAPI.Models;
 
 namespace LibraryManagementAPI.Data;
 
-public class LibraryContext : DbContext
+public class LibraryContext(DbContextOptions<LibraryContext> options) : DbContext(options)
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Book> Books { get; set; }
-
-    public LibraryContext(DbContextOptions<LibraryContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
