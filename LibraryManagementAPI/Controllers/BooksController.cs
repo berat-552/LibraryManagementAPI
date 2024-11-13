@@ -9,7 +9,7 @@ namespace LibraryManagementAPI.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
-    private LibraryContext _context;
+    private readonly LibraryContext _context;
 
     public BooksController(LibraryContext context)
     {
