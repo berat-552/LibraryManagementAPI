@@ -49,6 +49,14 @@ This command will delete the most recent migration files and update the model sn
 
 #### 
 
+## Running Tests
+To run the tests for the project, use the following command:
+
+```sh
+dotnet test
+```
+Alternatively, use the test button in Visual Studio 2022 to run all tests
+
 ## Models
 
 ### Book
