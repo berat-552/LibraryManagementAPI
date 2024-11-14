@@ -83,6 +83,6 @@ public class BookTests
         var isValid = Validator.TryValidateObject(book, new ValidationContext(book), validationResults, true);
 
         Assert.False(isValid);
-        Assert.Contains(validationResults, v => v.ErrorMessage == "Invalid ISBN format.");
+        Assert.Contains(validationResults, validation => validation.ErrorMessage == "Invalid ISBN format.");
     }
 }
