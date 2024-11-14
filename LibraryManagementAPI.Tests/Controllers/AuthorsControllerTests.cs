@@ -51,7 +51,7 @@ public class AuthorsControllerTests
     }
 
     [Fact]
-    public async Task GetAuthorsByQuantity_ReturnsWantedQuantityOfAuthor()
+    public async Task GetAuthorsByQuantity_ReturnsWantedQuantityOfAuthors()
     {
         var quantity = 4;
         var result = await _controller.GetAuthorsByQuantity(quantity);
