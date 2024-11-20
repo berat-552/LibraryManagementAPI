@@ -16,7 +16,7 @@ git clone https://github.com/berat-552/LibraryManagementAPI.git
 ```
 
 ## Database Setup (SQLite)
-To set up the database, you will need to use Entiy Framework Core migrations. Here are the steps:
+To set up the database, you will need to use Entity Framework Core migrations. Here are the steps:
 
 #### Add Initial Migration
 This command creates a migration script for the initial database schema.
