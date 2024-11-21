@@ -1,8 +1,8 @@
 ﻿using LibraryManagementAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LibraryManagementAPI.Data
-{
+namespace LibraryManagementAPI.Data;
+
     public class LibraryContext(DbContextOptions<LibraryContext> options) : DbContext(options)
     {
         public DbSet<Author> Authors { get; set; }
