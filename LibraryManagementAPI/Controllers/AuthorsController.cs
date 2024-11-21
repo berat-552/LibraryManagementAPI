@@ -1,4 +1,5 @@
 ﻿using LibraryManagementAPI.Data;
+using LibraryManagementAPI.Interfaces;
 using LibraryManagementAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace LibraryManagementAPI.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class AuthorsController(LibraryContext context) : ControllerBase
+public class AuthorsController(LibraryContext context) : ControllerBase, IAuthorsController
 {
     private readonly LibraryContext _context = context;
 

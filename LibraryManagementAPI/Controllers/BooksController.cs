@@ -2,12 +2,13 @@
 using LibraryManagementAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using LibraryManagementAPI.Interfaces;
 
 namespace LibraryManagementAPI.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class BooksController(LibraryContext context) : ControllerBase
+public class BooksController(LibraryContext context) : ControllerBase, IBooksController
 {
     private readonly LibraryContext _context = context;
 
