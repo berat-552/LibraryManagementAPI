@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LibraryManagementAPI.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibraryManagementAPI.Models;
 
-public class Author
+public class Author : IAuthor
 {
     public int Id { get; set; }
 
