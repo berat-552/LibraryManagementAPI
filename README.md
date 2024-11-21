@@ -21,7 +21,7 @@ To set up the database, you will need to use Entity Framework Core migrations. H
 #### Add Initial Migration
 This command creates a migration script for the initial database schema.
 ```bash
-dotnet ef migrations ef add initialCreate
+dotnet ef migrations add initialCreate
 ```
 
 #### Apply Migrations
