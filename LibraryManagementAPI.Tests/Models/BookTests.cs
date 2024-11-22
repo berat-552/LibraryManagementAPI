@@ -6,6 +6,18 @@ namespace LibraryManagementAPI.Tests.Models;
 
 public class BookTests
 {
+    private static Book CreateBook(string isbn)
+    {
+        return new Book
+        {
+            BookTitle = "Book",
+            ISBN = isbn,
+            Genre = "Fiction",
+            PublishedDate = DateTime.Now,
+            AuthorId = 1
+        };
+    }
+
     [Fact]
     public void Book_ShouldHaveDefaultValues()
     {
@@ -19,7 +31,7 @@ public class BookTests
     }
 
     [Fact]
-    public void GetTestBooks_ShouldReturnListOfBooks()
+    public void SeedBooks_ShouldReturnListOfBooks()
     {
         var count = 9;
         var books = SeedData.SeedBooks();
@@ -29,37 +41,14 @@ public class BookTests
         Assert.IsType<List<Book>>(books);
     }
 
-    [Fact]
-    public void Book_WithValidISBN13Digit_ShouldPassValidation()
+    [Theory]
+    [InlineData("978-3-16-148410-0")] // Valid ISBN-13
+    [InlineData("0-306-40615-2")] // Valid ISBN-10
+    [InlineData("9783161484100")] // Valid ISBN-13 without dashes
+    [InlineData("0306406152")] // Valid ISBN-10 without dashes
+    public void Book_WithValidISBN_ShouldPassValidation(string isbn)
     {
-        var book = new Book
-        {
-            BookTitle = "Valid Book",
-            ISBN = "978-3-16-148410-0", // Valid ISBN-13
-            Genre = "Fiction",
-            PublishedDate = DateTime.Now,
-            AuthorId = 1
-        };
-
-        var validationResults = new List<ValidationResult>();
-        // checks all the validation attributes applied to the class
-        var isValid = Validator.TryValidateObject(book, new ValidationContext(book), validationResults, true);
-
-        Assert.True(isValid);
-        Assert.Empty(validationResults);
-    }
-
-    [Fact]
-    public void Book_WithValidISBN10Digit_ShouldPassValidation()
-    {
-        var book = new Book
-        {
-            BookTitle = "Valid Book",
-            ISBN = "0-306-40615-2", // Valid ISBN-10
-            Genre = "Fiction",
-            PublishedDate = DateTime.Now,
-            AuthorId = 1
-        };
+        var book = CreateBook(isbn);
 
         var validationResults = new List<ValidationResult>();
         var isValid = Validator.TryValidateObject(book, new ValidationContext(book), validationResults, true);
@@ -68,22 +57,21 @@ public class BookTests
         Assert.Empty(validationResults);
     }
 
-    [Fact]
-    public void Book_WithInvalidISBN_ShouldFailValidation()
+    [Theory]
+    [InlineData(null)] // Null ISBN
+    [InlineData("")] // Empty ISBN
+    [InlineData("123")] // Too short
+    [InlineData("978-3-16-148410-0123")] // Too long
+    [InlineData("9783161484100123")] // Too long AND without dashes
+    [InlineData("978-3-16-148410-X")] // Invalid character
+    public void Book_WithInvalidISBN_ShouldFailValidation(string? isbn)
     {
-        var book = new Book
-        {
-            BookTitle = "Invalid Book",
-            ISBN = "invalid-isbn", // Invalid ISBN
-            Genre = "Fiction",
-            PublishedDate = DateTime.Now,
-            AuthorId = 1
-        };
+        var book = CreateBook(isbn!);
 
         var validationResults = new List<ValidationResult>();
         var isValid = Validator.TryValidateObject(book, new ValidationContext(book), validationResults, true);
 
         Assert.False(isValid);
-        Assert.Contains(validationResults, validation => validation.ErrorMessage == "Invalid ISBN format.");
+        Assert.NotEmpty(validationResults);
     }
 }
