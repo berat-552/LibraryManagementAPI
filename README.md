@@ -107,3 +107,29 @@ PUT /api/v1/authors/{id}
 ```bash
 DELETE /api/v1/authors/{id}
 ```
+---
+
+#### Get all Books
+```bash
+GET /api/v1/books
+```
+
+#### Create a new book
+```bash
+POST /api/v1/books
+```
+
+#### Get a Book by ID
+```bash
+GET /api/v1/books/{id}
+```
+
+#### Update a Book
+```bash
+PUT /api/v1/books{id}
+```
+
+#### Delete an Author
+```bash
+DELETE /api/v1/authors/{id}
+```
