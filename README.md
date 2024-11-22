@@ -50,7 +50,7 @@ This command will delete the most recent migration files and update the model sn
 #### 
 
 ## Running Tests
-To run the tests for the project, use the following command:
+To run the tests for the project, use the following command inside the project directory:
 
 ```sh
 dotnet test
