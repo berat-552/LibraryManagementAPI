@@ -7,8 +7,13 @@ public static class SeedData
 {
     public static void Seed(ModelBuilder modelBuilder)
     {
-        // Seed data for Authors
-        modelBuilder.Entity<Author>().HasData(
+        modelBuilder.Entity<Author>().HasData(SeedAuthors());
+        modelBuilder.Entity<Book>().HasData(SeedBooks());
+    }
+
+    public static List<Author> SeedAuthors()
+    {
+        return [
             new Author
             {
                 Id = 31,
@@ -63,10 +68,12 @@ public static class SeedData
                 AuthorName = "Charles Dickens",
                 Biography = "Charles Dickens was an English writer and social critic. He created some of the world's best-known fictional characters and is regarded by many as the greatest novelist of the Victorian era. His notable works include 'A Tale of Two Cities', 'Great Expectations', and 'David Copperfield'."
             }
-        );
+        ];
+    }
 
-        // Seed data for Books
-        modelBuilder.Entity<Book>().HasData(
+    public static List<Book> SeedBooks()
+    {
+        return [
             new Book
             {
                 Id = 21,
@@ -148,6 +155,6 @@ public static class SeedData
                 PublishedDate = new DateTime(1859, 4, 30),
                 AuthorId = 39
             }
-        );
+        ];
     }
 }
