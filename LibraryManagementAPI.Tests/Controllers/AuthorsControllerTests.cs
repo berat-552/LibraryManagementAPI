@@ -72,9 +72,8 @@ public class AuthorsControllerTests
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         var foundAuthor = Assert.IsType<Author>(okResult.Value);
 
-        Assert.NotNull(result);
+        Assert.NotNull(foundAuthor);
         Assert.Equal(id, foundAuthor.Id);
-        Assert.NotEmpty(_context.Authors);
     }
 
     [Fact]
