@@ -1,4 +1,5 @@
-﻿using LibraryManagementAPI.Models;
+﻿using LibraryManagementAPI.Data;
+using LibraryManagementAPI.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace LibraryManagementAPI.Tests.Models;
@@ -18,8 +19,8 @@ public class AuthorTests
     [Fact]
     public void GetTestAuthors_ShouldReturnListOfAuthors()
     {
-        var count = 6;
-        var authors = Author.GetTestAuthors();
+        var count = 9;
+        var authors = SeedData.SeedAuthors();
 
         Assert.NotNull(authors);
         Assert.Equal(count, authors.Count);

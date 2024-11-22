@@ -31,7 +31,7 @@ public class AuthorsControllerTests
         _context.Database.EnsureCreated();
 
         // Seed the in-memory database with test data
-        _context.Authors.AddRange(Author.GetTestAuthors());
+        _context.Authors.AddRange(SeedData.SeedAuthors());
         _context.SaveChanges();
 
         // Initialize the controller with the test database context
@@ -42,7 +42,7 @@ public class AuthorsControllerTests
     [Fact]
     public async Task GetAuthors_ReturnsAllAuthors()
     {
-        var totalAuthorsCount = 6;
+        var totalAuthorsCount = 9;
         var result = await _controller.GetAuthors();
         var authors = Assert.IsType<List<Author>>(result.Value);
 
@@ -66,7 +66,7 @@ public class AuthorsControllerTests
     [Fact]
     public async Task GetAuthorById_ReturnsAuthor()
     {
-        var id = 1;
+        var id = 31;
         var result = await _controller.GetAuthorById(id);
 
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -98,7 +98,7 @@ public class AuthorsControllerTests
     [Fact]
     public async Task UpdateAuthor_ReturnsOkResult_WhenAuthorIsUpdated()
     {
-        var authorToUpdate = Author.GetTestAuthors().First();
+        var authorToUpdate = SeedData.SeedAuthors().First();
 
         authorToUpdate.AuthorName = "Revised Author Name";
 
@@ -114,7 +114,7 @@ public class AuthorsControllerTests
     [Fact]
     public async Task DeleteAuthor_ReturnsNoContentResult_WhenAuthorIsDeleted()
     {
-        var authorToDelete = Author.GetTestAuthors().First();
+        var authorToDelete = SeedData.SeedAuthors().First();
 
         var result = await _controller.DeleteAuthor(authorToDelete.Id);
         var noContentResult = Assert.IsType<NoContentResult>(result);

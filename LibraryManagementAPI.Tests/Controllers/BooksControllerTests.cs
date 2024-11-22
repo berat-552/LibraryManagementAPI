@@ -31,7 +31,7 @@ public class BooksControllerTests
         _context.Database.EnsureCreated();
 
         // Seed the in-memory database with test data
-        _context.Books.AddRange(Book.GetTestBooks());
+        _context.Books.AddRange(SeedData.SeedBooks());
         _context.SaveChanges();
 
         _controller = new BooksController(_context);
@@ -41,7 +41,7 @@ public class BooksControllerTests
     [Fact]
     public async Task GetBooks_ReturnsAllBooks()
     {
-        var totalBooksCount = 3;
+        var totalBooksCount = 9;
         var result = await _controller.GetBooks();
         var books = Assert.IsType<List<Book>>(result.Value);
 
@@ -52,7 +52,7 @@ public class BooksControllerTests
     [Fact]
     public async Task GetBookById_ReturnsBook()
     {
-        var id = 1;
+        var id = 21;
         var result = await _controller.GetBookById(id);
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         var foundBook = Assert.IsType<Book>(okResult.Value);
@@ -88,7 +88,7 @@ public class BooksControllerTests
     [Fact]
     public async Task UpdateBook_ReturnsOkResult_WhenBookIsUpdatedBook()
     {
-        var bookToUpdate = Book.GetTestBooks().First();
+        var bookToUpdate = SeedData.SeedBooks().First();
 
         bookToUpdate.Genre = "Action";
 
@@ -104,7 +104,7 @@ public class BooksControllerTests
     [Fact]
     public async Task DeleteBook_ReturnsNoContentResult_WhenBookIsDeleted()
     {
-        var bookToDelete = Book.GetTestBooks().First();
+        var bookToDelete = SeedData.SeedBooks().First();
         var result = await _controller.DeleteBook(bookToDelete.Id);
         var noContentResult = Assert.IsType<NoContentResult>(result);
         var deletedBook = await _context.Books.FindAsync(bookToDelete.Id);

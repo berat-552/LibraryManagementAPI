@@ -1,4 +1,5 @@
-﻿using LibraryManagementAPI.Models;
+﻿using LibraryManagementAPI.Data;
+using LibraryManagementAPI.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace LibraryManagementAPI.Tests.Models;
@@ -20,8 +21,8 @@ public class BookTests
     [Fact]
     public void GetTestBooks_ShouldReturnListOfBooks()
     {
-        var count = 3;
-        var books = Book.GetTestBooks();
+        var count = 9;
+        var books = SeedData.SeedBooks();
 
         Assert.NotNull(books);
         Assert.Equal(count, books.Count);
