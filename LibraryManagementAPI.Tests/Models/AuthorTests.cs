@@ -17,7 +17,7 @@ public class AuthorTests
     }
 
     [Fact]
-    public void GetTestAuthors_ShouldReturnListOfAuthors()
+    public void SeedAuthors_ShouldReturnListOfAuthors()
     {
         var count = 9;
         var authors = SeedData.SeedAuthors();
@@ -30,11 +30,7 @@ public class AuthorTests
     [Fact]
     public void Author_ShouldPassValidation()
     {
-        var author = new Author
-        {
-            AuthorName = "Jane Doe",
-            Biography = "Jane Doe is a renowned author known for her works in fiction."
-        };
+        var author = SeedData.SeedAuthors().First();
 
         var validationResults = new List<ValidationResult>();
         var isValid = Validator.TryValidateObject(author, new ValidationContext(author), validationResults, true);
