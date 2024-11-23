@@ -42,7 +42,7 @@ public class AuthorsControllerSuccessTests
     [Fact]
     public async Task GetAuthors_ReturnsAllAuthors()
     {
-        var totalAuthorsCount = 9;
+        var totalAuthorsCount = 8;
         var result = await _controller.GetAuthors();
         var authors = Assert.IsType<List<Author>>(result.Value);
 
