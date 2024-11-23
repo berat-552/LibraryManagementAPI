@@ -42,8 +42,8 @@ public class BooksControllerTests
     public async Task GetBooks_ReturnsAllBooks()
     {
         var totalBooksCount = 9;
-        var result = await _controller.GetBooks();
-        var books = Assert.IsType<List<Book>>(result.Value);
+        var response = await _controller.GetBooks();
+        var books = Assert.IsType<List<Book>>(response.Value);
 
         Assert.NotEmpty(books);
         Assert.Equal(totalBooksCount, books.Count);
@@ -53,8 +53,8 @@ public class BooksControllerTests
     public async Task GetBookById_ReturnsBook()
     {
         var id = 21;
-        var result = await _controller.GetBookById(id);
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var response = await _controller.GetBookById(id);
+        var okResult = Assert.IsType<OkObjectResult>(response.Result);
         var foundBook = Assert.IsType<Book>(okResult.Value);
 
         Assert.NotNull(foundBook);
@@ -74,8 +74,8 @@ public class BooksControllerTests
             AuthorId = 42
         };
 
-        var result = await _controller.CreateBook(bookToCreate);
-        var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+        var response = await _controller.CreateBook(bookToCreate);
+        var createdResult = Assert.IsType<CreatedAtActionResult>(response.Result);
         var createdBook = Assert.IsType<Book>(createdResult.Value);
 
         Assert.NotNull(createdBook);
@@ -89,11 +89,10 @@ public class BooksControllerTests
     public async Task UpdateBook_ReturnsOkResult_WhenBookIsUpdatedBook()
     {
         var bookToUpdate = SeedData.SeedBooks().First();
-
         bookToUpdate.Genre = "Action";
 
-        var result = await _controller.UpdateBook(bookToUpdate.Id, bookToUpdate);
-        var okResult = Assert.IsType<OkObjectResult>(result);
+        var response = await _controller.UpdateBook(bookToUpdate.Id, bookToUpdate);
+        var okResult = Assert.IsType<OkObjectResult>(response);
         var updatedBook = Assert.IsType<Book>(okResult.Value);
 
         Assert.Equal(bookToUpdate.Id, updatedBook.Id);
@@ -105,8 +104,8 @@ public class BooksControllerTests
     public async Task DeleteBook_ReturnsNoContentResult_WhenBookIsDeleted()
     {
         var bookToDelete = SeedData.SeedBooks().First();
-        var result = await _controller.DeleteBook(bookToDelete.Id);
-        var noContentResult = Assert.IsType<NoContentResult>(result);
+        var response = await _controller.DeleteBook(bookToDelete.Id);
+        var noContentResult = Assert.IsType<NoContentResult>(response);
         var deletedBook = await _context.Books.FindAsync(bookToDelete.Id);
 
         Assert.Null(deletedBook);

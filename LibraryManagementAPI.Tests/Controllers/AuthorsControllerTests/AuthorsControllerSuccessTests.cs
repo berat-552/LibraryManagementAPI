@@ -43,8 +43,9 @@ public class AuthorsControllerSuccessTests
     public async Task GetAuthors_ReturnsAllAuthors()
     {
         var totalAuthorsCount = 9;
-        var result = await _controller.GetAuthors();
-        var authors = Assert.IsType<List<Author>>(result.Value);
+        var response = await _controller.GetAuthors();
+        var okResult = Assert.IsType<OkObjectResult>(response.Result);
+        var authors = Assert.IsType<List<Author>>(okResult.Value);
 
         Assert.NotEmpty(authors);
         Assert.Equal(totalAuthorsCount, authors.Count);
@@ -54,9 +55,9 @@ public class AuthorsControllerSuccessTests
     public async Task GetAuthorsByQuantity_ReturnsWantedQuantityOfAuthors()
     {
         var quantity = 4;
-        var result = await _controller.GetAuthorsByQuantity(quantity);
+        var response = await _controller.GetAuthorsByQuantity(quantity);
 
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var okResult = Assert.IsType<OkObjectResult>(response.Result);
         var authors = Assert.IsType<List<Author>>(okResult.Value);
 
         Assert.NotEmpty(authors);
@@ -67,9 +68,9 @@ public class AuthorsControllerSuccessTests
     public async Task GetAuthorById_ReturnsAuthor()
     {
         var id = 31;
-        var result = await _controller.GetAuthorById(id);
+        var response = await _controller.GetAuthorById(id);
 
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var okResult = Assert.IsType<OkObjectResult>(response.Result);
         var foundAuthor = Assert.IsType<Author>(okResult.Value);
 
         Assert.NotNull(foundAuthor);
@@ -85,8 +86,8 @@ public class AuthorsControllerSuccessTests
             Biography = "John Doe is a prolific author known for his engaging novels."
         };
 
-        var result = await _controller.CreateAuthor(authorToCreate);
-        var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+        var response = await _controller.CreateAuthor(authorToCreate);
+        var createdResult = Assert.IsType<CreatedAtActionResult>(response.Result);
         var createdAuthor = Assert.IsType<Author>(createdResult.Value);
 
         Assert.NotNull(createdAuthor);
@@ -101,8 +102,8 @@ public class AuthorsControllerSuccessTests
 
         authorToUpdate.AuthorName = "Revised Author Name";
 
-        var result = await _controller.UpdateAuthor(authorToUpdate.Id, authorToUpdate);
-        var okResult = Assert.IsType<OkObjectResult>(result);
+        var response = await _controller.UpdateAuthor(authorToUpdate.Id, authorToUpdate);
+        var okResult = Assert.IsType<OkObjectResult>(response);
         var updatedAuthor = Assert.IsType<Author>(okResult.Value);
 
         Assert.Equal(authorToUpdate.Id, updatedAuthor.Id);
@@ -115,8 +116,8 @@ public class AuthorsControllerSuccessTests
     {
         var authorToDelete = SeedData.SeedAuthors().First();
 
-        var result = await _controller.DeleteAuthor(authorToDelete.Id);
-        var noContentResult = Assert.IsType<NoContentResult>(result);
+        var response = await _controller.DeleteAuthor(authorToDelete.Id);
+        var noContentResult = Assert.IsType<NoContentResult>(response);
         var deletedAuthor = await _context.Authors.FindAsync(authorToDelete.Id);
 
         Assert.NotNull(noContentResult);
