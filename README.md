@@ -1,6 +1,6 @@
 # LibraryManagementAPI
 
-A RESTful ASP.NET Core Web API for managing books and authors in a library.
+A RESTful ASP.NET Core Web API for managing books and authors in a library
 
 ## Features
 
