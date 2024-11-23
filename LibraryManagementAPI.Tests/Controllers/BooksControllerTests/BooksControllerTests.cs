@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit.Abstractions;
 
-namespace LibraryManagementAPI.Tests.Controllers;
+namespace Tests.Controllers.BooksControllerTests;
 
 public class BooksControllerTests
 {
