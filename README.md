@@ -55,7 +55,7 @@ To run the tests for the project, use the following command inside the project d
 ```sh
 dotnet test
 ```
-Alternatively, use the test button in Visual Studio 2022 to run all tests
+Alternatively, use the test button in Visual Studio 2022 to run all tests.
 
 ## Models
 
