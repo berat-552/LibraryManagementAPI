@@ -2,7 +2,7 @@
 using LibraryManagementAPI.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace LibraryManagementAPI.Tests.Models;
+namespace Tests.Models;
 
 public class AuthorTests
 {
