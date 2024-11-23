@@ -15,7 +15,13 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
     {
-        return await _context.Authors.ToListAsync();
+        var authors = await _context.Authors.ToListAsync();
+        if (authors == null || authors.Count == 0)
+        {
+            return NotFound();
+        }
+
+        return Ok(authors);
     }
 
     [HttpGet("{id}")]
