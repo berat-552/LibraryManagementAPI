@@ -39,6 +39,21 @@ public class AuthorsControllerFailTests
     }
 
     [Fact]
+    public async Task GetAuthors_NoAuthors_ShouldReturnNotFound()
+    {
+        // Clear the database to simulate no authors
+        _context.Authors.RemoveRange(_context.Authors);
+        await _context.SaveChangesAsync();
+
+        var response = await _controller.GetAuthors();
+        var notFoundResult = Assert.IsType<NotFoundResult>(response.Result);
+
+        Assert.Null(response.Value);
+        Assert.IsNotType<List<Author>>(response.Value);
+        Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+    }
+
+    [Fact]
     public async Task GetAuthorById_InvalidId_ShouldReturnNotFound()
     {
         var invalidId = 999;
