@@ -1,5 +1,6 @@
 ﻿using LibraryManagementAPI.Controllers;
 using LibraryManagementAPI.Data;
+using LibraryManagementAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -57,12 +58,11 @@ public class AuthorsControllerFailTests
     public async Task GetAuthorById_InvalidId_ShouldReturnNotFound()
     {
         var invalidId = 999;
-        var result = await _controller.GetAuthorById(invalidId);
+        var response = await _controller.GetAuthorById(invalidId);
+        var notFoundResult = Assert.IsType<NotFoundResult>(response.Result);
 
-        var notFoundResult = Assert.IsType<NotFoundResult>(result.Result);
-
-        Assert.Null(result.Value);
+        Assert.Null(response.Value);
+        Assert.IsNotType<Author>(response.Value);
         Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
-        // add more checks or modify
     }
 }
