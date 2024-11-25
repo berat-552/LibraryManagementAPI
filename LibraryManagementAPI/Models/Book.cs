@@ -9,6 +9,7 @@ public class Book : IBook
     public int Id { get; set; }
 
     [Required(ErrorMessage = "title is required")]
+    [StringLength(100, MinimumLength = 1, ErrorMessage = "bookTitle must be between 1 and 100 characters")]
     public string BookTitle { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "isbn is required")]
@@ -16,6 +17,7 @@ public class Book : IBook
     public string ISBN { get; set; } = string.Empty; // ISBN - International Standard Book Number
 
     [Required(ErrorMessage = "genre is required")]
+    [StringLength(100, MinimumLength = 1, ErrorMessage = "genre must be between 1 and 100 characters")]
     public string Genre { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "publishedDate is required")]
