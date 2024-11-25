@@ -1,5 +1,6 @@
 ﻿using LibraryManagementAPI.Controllers;
 using LibraryManagementAPI.Data;
+using LibraryManagementAPI.Interfaces;
 using LibraryManagementAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -64,5 +65,20 @@ public class AuthorsControllerFailTests
         Assert.Null(response.Value);
         Assert.IsNotType<Author>(response.Value);
         Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateAuthor_InvalidBody_ShouldReturnBadRequest()
+    {
+        var authorToUpdate = SeedData.SeedAuthors().First();
+        authorToUpdate.AuthorName = "";
+
+        _controller.ModelState.AddModelError("AuthorName", "authorName is required");
+        _controller.ModelState.AddModelError("AuthorName", "authorName must be between 1 and 100 characters");
+
+        var response = await _controller.UpdateAuthor(authorToUpdate.Id, authorToUpdate);
+        var badRequestResult = Assert.IsType<BadRequestResult>(response);
+
+        Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);
     }
 }
