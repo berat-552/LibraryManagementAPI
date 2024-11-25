@@ -68,7 +68,7 @@ public class AuthorsControllerFailTests
     }
 
     [Fact]
-    public async Task UpdateAuthor_InvalidBody_ShouldReturnBadRequest()
+    public async Task UpdateAuthor_InvalidFields_ShouldReturnBadRequest()
     {
         var authorToUpdate = SeedData.SeedAuthors().First();
         authorToUpdate.AuthorName = "";
