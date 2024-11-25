@@ -62,7 +62,7 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAuthor(int id, [FromBody] Author author)
     {
-        if (id != author.Id)
+        if (id != author.Id || !ModelState.IsValid)
         {
             return BadRequest();
         }
