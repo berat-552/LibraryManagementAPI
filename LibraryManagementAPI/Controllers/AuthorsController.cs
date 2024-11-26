@@ -38,16 +38,28 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     }
 
     [HttpGet("quantity")]
-    public async Task<ActionResult<Author>> GetAuthorsByQuantity(int? quantity)
+    public async Task<ActionResult<List<Author>>> GetAuthorsByQuantity(int? quantity)
     {
-        var authors = await _context.Authors.ToListAsync();
-
-        if (quantity.HasValue)
+        if (quantity <= 0)
         {
-            authors = authors.Take(quantity.Value).ToList();
+            return BadRequest();
         }
 
-        return Ok(authors);
+        var authors = await _context.Authors.ToListAsync();
+
+        if (!quantity.HasValue)
+        {
+            return Ok(authors);
+        }
+
+        if (quantity.Value > authors.Count)
+        {
+            var partialQuantityAuthors = authors.Take(quantity.Value).ToList();
+            return StatusCode(StatusCodes.Status206PartialContent, partialQuantityAuthors);
+        }
+
+        var quantityWanted = authors.Take(quantity.Value).ToList();
+        return Ok(quantityWanted);
     }
 
     [HttpPost]
