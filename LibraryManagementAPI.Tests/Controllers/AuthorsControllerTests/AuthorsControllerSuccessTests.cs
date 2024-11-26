@@ -59,9 +59,24 @@ public class AuthorsControllerSuccessTests
 
         var okResult = Assert.IsType<OkObjectResult>(response.Result);
         var authors = Assert.IsType<List<Author>>(okResult.Value);
+        
+        Assert.NotEmpty(authors);
+        Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+        Assert.Equal(quantity, authors.Count);
+    }
+
+    [Fact]
+    public async Task GetAuthorsByQuantity_ReturnsPartialContent()
+    {
+        var quantity = 30;
+        var response = await _controller.GetAuthorsByQuantity(quantity);
+
+        var okResult = Assert.IsType<ObjectResult>(response.Result);
+        var authors = Assert.IsType<List<Author>>(okResult.Value);
 
         Assert.NotEmpty(authors);
-        Assert.Equal(quantity, authors.Count);
+        Assert.Equal(StatusCodes.Status206PartialContent, okResult.StatusCode);
+        Assert.NotEqual(quantity, authors.Count);
     }
 
     [Fact]

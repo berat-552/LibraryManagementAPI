@@ -1,6 +1,5 @@
 ﻿using LibraryManagementAPI.Controllers;
 using LibraryManagementAPI.Data;
-using LibraryManagementAPI.Interfaces;
 using LibraryManagementAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +39,8 @@ public class AuthorsControllerFailTests
         _output = output;
     }
 
+    private const int InvalidAuthorId = 999;
+
     [Fact]
     public async Task GetAuthors_NoAuthors_ShouldReturnNotFound()
     {
@@ -58,13 +59,25 @@ public class AuthorsControllerFailTests
     [Fact]
     public async Task GetAuthorById_InvalidId_ShouldReturnNotFound()
     {
-        var invalidId = 999;
-        var response = await _controller.GetAuthorById(invalidId);
+        var response = await _controller.GetAuthorById(InvalidAuthorId);
         var notFoundResult = Assert.IsType<NotFoundResult>(response.Result);
 
         Assert.Null(response.Value);
         Assert.IsNotType<Author>(response.Value);
         Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+    }
+
+    [Theory]
+    [InlineData(-3)]
+    [InlineData(0)]
+    public async Task GetAuthorsByQuantity_NegativeQuantity_ReturnsBadRequest(int invalidQuantity)
+    {
+        var response = await _controller.GetAuthorsByQuantity(invalidQuantity);
+        var badRequestResult = Assert.IsType<BadRequestResult>(response.Result);
+
+        Assert.Null(response.Value);
+        Assert.IsNotType<List<Author>>(response.Value);
+        Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);
     }
 
     [Fact]
@@ -79,6 +92,17 @@ public class AuthorsControllerFailTests
         var response = await _controller.UpdateAuthor(authorToUpdate.Id, authorToUpdate);
         var badRequestResult = Assert.IsType<BadRequestResult>(response);
 
+        Assert.NotNull(badRequestResult);
         Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteAuthor_AuthorDoesntExist_ShouldReturnNotFound()
+    {
+        var response = await _controller.DeleteAuthor(InvalidAuthorId);
+        var notFoundResult = Assert.IsType<NotFoundResult>(response);
+
+        Assert.NotNull(notFoundResult);
+        Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
     }
 }
