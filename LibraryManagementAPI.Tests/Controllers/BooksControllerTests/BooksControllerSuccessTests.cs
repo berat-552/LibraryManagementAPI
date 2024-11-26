@@ -8,13 +8,13 @@ using Xunit.Abstractions;
 
 namespace Tests.Controllers.BooksControllerTests;
 
-public class BooksControllerTests
+public class BooksControllerSuccessTests
 {
     private readonly BooksController _controller;
     private readonly LibraryContext _context;
     private readonly ITestOutputHelper _output; // Debug purposes
 
-    public BooksControllerTests(ITestOutputHelper output)
+    public BooksControllerSuccessTests(ITestOutputHelper output)
     {
         var dbName = Guid.NewGuid().ToString();
 
