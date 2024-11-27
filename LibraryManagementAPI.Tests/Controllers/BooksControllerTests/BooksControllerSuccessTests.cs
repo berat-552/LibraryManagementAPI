@@ -43,10 +43,40 @@ public class BooksControllerSuccessTests
     {
         var totalBooksCount = 9;
         var response = await _controller.GetBooks();
-        var books = Assert.IsType<List<Book>>(response.Value);
+        var okResult = Assert.IsType<OkObjectResult>(response.Result);
+        var books = Assert.IsType<List<Book>>(okResult.Value);
 
         Assert.NotEmpty(books);
+        Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
         Assert.Equal(totalBooksCount, books.Count);
+    }
+
+    [Fact]
+    public async Task GetBooksByQuantity_ReturnsWantedQuantityOfAuthors()
+    {
+        var quantity = 4;
+        var response = await _controller.GetBooksByQuantity(quantity);
+
+        var okResult = Assert.IsType<OkObjectResult>(response.Result);
+        var books = Assert.IsType<List<Book>>(okResult.Value);
+
+        Assert.NotEmpty(books);
+        Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+        Assert.Equal(quantity, books.Count);
+    }
+
+    [Fact]
+    public async Task GetBooksByQuantity_ReturnsPartialContent()
+    {
+        var quantity = 30;
+        var response = await _controller.GetBooksByQuantity(quantity);
+
+        var okResult = Assert.IsType<ObjectResult>(response.Result);
+        var books = Assert.IsType<List<Book>>(okResult.Value);
+
+        Assert.NotEmpty(books);
+        Assert.Equal(StatusCodes.Status206PartialContent, okResult.StatusCode);
+        Assert.NotEqual(quantity, books.Count);
     }
 
     [Fact]
