@@ -24,21 +24,8 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
         return Ok(authors);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Author>> GetAuthorById(int id)
-    {
-        var author = await _context.Authors.FindAsync(id);
-
-        if (author == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(author);
-    }
-
     [HttpGet("quantity")]
-    public async Task<ActionResult<List<Author>>> GetAuthorsByQuantity(int? quantity)
+    public async Task<ActionResult<IEnumerable<Author>>> GetAuthorsByQuantity(int? quantity)
     {
         if (quantity <= 0)
         {
@@ -60,6 +47,19 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
 
         var quantityWanted = authors.Take(quantity.Value).ToList();
         return Ok(quantityWanted);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Author>> GetAuthorById(int id)
+    {
+        var author = await _context.Authors.FindAsync(id);
+
+        if (author == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(author);
     }
 
     [HttpPost]
