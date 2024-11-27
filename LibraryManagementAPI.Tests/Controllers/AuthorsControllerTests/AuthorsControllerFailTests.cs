@@ -70,7 +70,8 @@ public class AuthorsControllerFailTests
     [Theory]
     [InlineData(-3)]
     [InlineData(0)]
-    public async Task GetAuthorsByQuantity_NegativeQuantity_ReturnsBadRequest(int invalidQuantity)
+    [InlineData(-250)]
+    public async Task GetAuthorsByQuantity_InvalidQuantity_ReturnsBadRequest(int invalidQuantity)
     {
         var response = await _controller.GetAuthorsByQuantity(invalidQuantity);
         var badRequestResult = Assert.IsType<BadRequestResult>(response.Result);
