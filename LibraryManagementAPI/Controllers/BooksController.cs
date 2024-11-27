@@ -15,7 +15,38 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
     {
-        return await _context.Books.ToListAsync();
+        var books = await _context.Books.ToListAsync();
+        if (books == null || books.Count == 0)
+        {
+            return NotFound();
+        }
+
+        return Ok(books);
+    }
+
+    [HttpGet("quantity")]
+    public async Task<ActionResult<IEnumerable<Book>>> GetBooksByQuantity(int? quantity)
+    {
+        if (quantity <= 0)
+        {
+            return BadRequest();
+        }
+
+        var books = await _context.Books.ToListAsync();
+
+        if (!quantity.HasValue)
+        {
+            return Ok(books);
+        }
+
+        if (quantity.Value > books.Count)
+        {
+            var partialQuantityBooks = books.Take(quantity.Value).ToList();
+            return StatusCode(StatusCodes.Status206PartialContent, partialQuantityBooks);
+        }
+
+        var quantityWanted = books.Take(quantity.Value).ToList();
+        return Ok(quantityWanted);
     }
 
     [HttpGet("{id}")]
@@ -51,7 +82,7 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
     {
-        if (id != book.Id)
+        if (id != book.Id || !ModelState.IsValid)
         {
             return BadRequest();
         }
