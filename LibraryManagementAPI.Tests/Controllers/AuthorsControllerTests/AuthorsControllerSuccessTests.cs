@@ -48,6 +48,7 @@ public class AuthorsControllerSuccessTests
         var authors = Assert.IsType<List<Author>>(okResult.Value);
 
         Assert.NotEmpty(authors);
+        Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
         Assert.Equal(totalAuthorsCount, authors.Count);
     }
 
