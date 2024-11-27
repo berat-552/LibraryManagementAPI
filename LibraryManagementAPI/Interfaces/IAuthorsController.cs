@@ -7,7 +7,7 @@ public interface IAuthorsController
 {
     Task<ActionResult<IEnumerable<Author>>> GetAuthors();
     Task<ActionResult<Author>> GetAuthorById(int id);
-    Task<ActionResult<List<Author>>> GetAuthorsByQuantity(int? quantity);
+    Task<ActionResult<IEnumerable<Author>>> GetAuthorsByQuantity(int? quantity);
     Task<ActionResult<Author>> CreateAuthor([FromBody] Author author);
     Task<IActionResult> UpdateAuthor(int id, [FromBody] Author author);
     Task<IActionResult> DeleteAuthor(int id);
