@@ -1,6 +1,5 @@
 ﻿using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Helpers;
-using LibraryManagementAPI.Interfaces;
 using LibraryManagementAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
