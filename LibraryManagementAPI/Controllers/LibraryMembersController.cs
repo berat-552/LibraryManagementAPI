@@ -42,8 +42,6 @@ public class LibraryMembersController(LibraryContext context) : ControllerBase
         return CreatedAtAction(nameof(GetLibraryMemberById), new { id = libraryMember.Id }, libraryMember);
     }
 
-    // login endpoint
-
     [HttpPut("{id}")]
     public async Task<ActionResult<LibraryMember>> UpdateLibraryMember(int id, [FromBody] LibraryMember libraryMember)
     {
