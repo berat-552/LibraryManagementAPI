@@ -7,6 +7,7 @@ public class LibraryContext(DbContextOptions<LibraryContext> options) : DbContex
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Book> Books { get; set; }
+    public DbSet<LibraryMember> LibraryMembers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
