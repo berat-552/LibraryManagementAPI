@@ -6,7 +6,7 @@ namespace LibraryManagementAPI.Models;
 
 public class LibraryMember : ILibraryMember
 {
-    public Guid Id { get; set; } = new Guid();
+    public int Id { get; set; }
 
     [Required(ErrorMessage = "userName is required")]
     [StringLength(100, MinimumLength = 1, ErrorMessage = "username must be between 1 and 100 characters")]
