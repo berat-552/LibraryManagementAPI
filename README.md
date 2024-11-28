@@ -24,6 +24,16 @@ This command creates a migration script for the initial database schema.
 dotnet ef migrations add initialCreate
 ```
 
+#### List All Migrations
+
+```bash
+dotnet ef migrations list
+```
+#### Revert to the previous migration
+```bash
+dotnet ef database update PreviousMigrationName
+```
+
 #### Apply Migrations
 This command applies all pending migrations to the database, creating or updating the database schema.
 ```bash
