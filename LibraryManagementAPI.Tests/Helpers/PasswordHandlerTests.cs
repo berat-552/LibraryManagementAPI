@@ -2,13 +2,13 @@
 
 namespace Tests.Helpers;
 
-public class PasswordHasherTests
+public class PasswordHandlerTests
 {
     [Fact]
     public void HashPassword_ShouldReturnHashedPassword()
     {
         string password = "securePassword123";
-        string hashedPassword = PasswordHasher.HashPassword(password);
+        string hashedPassword = PasswordHandler.HashPassword(password);
 
         Assert.False(string.IsNullOrEmpty(hashedPassword));
         Assert.NotEqual(password, hashedPassword); // Ensure the hashed password is different from the original
@@ -18,10 +18,9 @@ public class PasswordHasherTests
     public void VerifyPassword_ShouldReturnTrue_ForValidPassword()
     {
         string password = "securePassword123";
-        string hashedPassword = PasswordHasher.HashPassword(password);
+        string hashedPassword = PasswordHandler.HashPassword(password);
 
-        bool isValid = PasswordHasher.VerifyPassword(password, hashedPassword);
-
+        bool isValid = PasswordHandler.VerifyPassword(password, hashedPassword);
         Assert.True(isValid);
     }
 
@@ -30,10 +29,9 @@ public class PasswordHasherTests
     {
         string password = "securePassword123";
         string wrongPassword = "wrongPassword123";
-        string hashedPassword = PasswordHasher.HashPassword(password);
+        string hashedPassword = PasswordHandler.HashPassword(password);
 
-        bool isValid = PasswordHasher.VerifyPassword(wrongPassword, hashedPassword);
-
+        bool isValid = PasswordHandler.VerifyPassword(wrongPassword, hashedPassword);
         Assert.False(isValid);
     }
 }
