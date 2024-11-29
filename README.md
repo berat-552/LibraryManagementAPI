@@ -34,6 +34,11 @@ dotnet ef migrations list
 dotnet ef database update PreviousMigrationName
 ```
 
+#### Remove the latest migration
+```bash
+dotnet ef migrations remove
+```
+
 #### Apply Migrations
 This command applies all pending migrations to the database, creating or updating the database schema.
 ```bash
