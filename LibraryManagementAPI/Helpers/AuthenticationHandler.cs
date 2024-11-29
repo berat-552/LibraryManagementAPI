@@ -15,7 +15,8 @@ public class AuthenticationHandler(IConfiguration configuration)
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Name, user.Username)
+            new(ClaimTypes.Name, user.Username),
+            new(ClaimTypes.Email, user.Email)
         };
 
         var jwtSecret = _configuration["JWT_Secret"];
