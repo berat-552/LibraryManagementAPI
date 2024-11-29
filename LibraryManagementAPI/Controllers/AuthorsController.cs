@@ -1,6 +1,7 @@
 ﻿using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Interfaces;
 using LibraryManagementAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     private readonly LibraryContext _context = context;
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
     {
         var authors = await _context.Authors.ToListAsync();
@@ -25,6 +27,7 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     }
 
     [HttpGet("quantity")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<Author>>> GetAuthorsByQuantity(int? quantity)
     {
         if (quantity <= 0)
@@ -50,6 +53,7 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<Author>> GetAuthorById(int id)
     {
         var author = await _context.Authors.FindAsync(id);
@@ -63,6 +67,7 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<Author>> CreateAuthor([FromBody] Author author)
     {
         _context.Authors.Add(author);
@@ -72,6 +77,7 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> UpdateAuthor(int id, [FromBody] Author author)
     {
         if (id != author.Id || !ModelState.IsValid)
@@ -93,6 +99,7 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteAuthor(int id)
     {
         var author = await _context.Authors.FindAsync(id);

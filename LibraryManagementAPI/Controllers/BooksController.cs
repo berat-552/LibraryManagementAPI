@@ -3,6 +3,7 @@ using LibraryManagementAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryManagementAPI.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryManagementAPI.Controllers;
 
@@ -13,6 +14,7 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     private readonly LibraryContext _context = context;
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
     {
         var books = await _context.Books.ToListAsync();
@@ -25,6 +27,7 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     }
 
     [HttpGet("quantity")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<Book>>> GetBooksByQuantity(int? quantity)
     {
         if (quantity <= 0)
@@ -50,6 +53,7 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<Book>> GetBookById(int id)
     {
         var book = await _context.Books.FindAsync(id);
@@ -63,6 +67,7 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<Book>> CreateBook([FromBody] Book book)
     {
         var existingBook = await _context.Books
@@ -80,6 +85,7 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
     {
         if (id != book.Id || !ModelState.IsValid)
@@ -101,6 +107,7 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteBook(int id)
     {
         var book = await _context.Books.FindAsync(id);
