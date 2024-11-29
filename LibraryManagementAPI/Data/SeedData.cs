@@ -1,4 +1,5 @@
-﻿using LibraryManagementAPI.Models;
+﻿using LibraryManagementAPI.Helpers;
+using LibraryManagementAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Data;
@@ -9,6 +10,7 @@ public static class SeedData
     {
         modelBuilder.Entity<Author>().HasData(SeedAuthors());
         modelBuilder.Entity<Book>().HasData(SeedBooks());
+        modelBuilder.Entity<LibraryMember>().HasData(SeedLibraryMembers());
     }
 
     public static List<Author> SeedAuthors() => [
@@ -149,6 +151,51 @@ public static class SeedData
                 Genre = "Historical Fiction",
                 PublishedDate = new DateTime(1859, 4, 30),
                 AuthorId = 39
+            }
+        ];
+
+    public static List<LibraryMember> SeedLibraryMembers() => [
+            new LibraryMember
+            {
+                Id = 74,
+                Username = "JaneDoe55",
+                Email = "jane.doe@gmail.com",
+                Password = PasswordHandler.HashPassword("janedoe123")
+            },
+            new LibraryMember
+            {
+                Id = 24,
+                Username = "JohnSmith33",
+                Email = "john.smith@example.com",
+                Password = PasswordHandler.HashPassword("johnsmith123")
+            },
+            new LibraryMember
+            {
+                Id = 12,
+                Username = "AliceJohnson22",
+                Email = "alice.johnson@example.com",
+                Password = PasswordHandler.HashPassword("alicejohnson123")
+            },
+            new LibraryMember
+            {
+                Id = 45,
+                Username = "BobBrown11",
+                Email = "bob.brown@example.com",
+                Password = PasswordHandler.HashPassword("bobbrown123")
+            },
+            new LibraryMember
+            {
+                Id = 5,
+                Username = "CharlieClark77",
+                Email = "charlie.clark@example.com",
+                Password = PasswordHandler.HashPassword("charlieclark123")
+            },
+            new LibraryMember
+            {
+                Id = 21,
+                Username = "EveAdams88",
+                Email = "eve.adams@example.com",
+                Password = PasswordHandler.HashPassword("eveadams123")
             }
         ];
 }
