@@ -91,6 +91,17 @@ The API is documented using Swagger, providing a UI to explore all endpoints and
 
 - Swagger UI: Available at https://localhost:7147/swagger
 
+### JWT Authentication
+This API uses JWT (JSON Web Token) for authentication. To access protected endpoints, you need to include a valid JWT token in the Authorization header of your requests. You can obtain a token by logging in with valid credentials.
+
+To use JWT in Swagger:
+
+Click on the Authorize button in the Swagger UI.
+Enter your JWT token in the Value box.
+Once authorized, you can make authenticated requests to the protected endpoints.
+
+![image](https://github.com/user-attachments/assets/37954b7d-5c9a-4ee9-8a85-8528cde90271)
+
 ## Endpoints
 
 #### Get all Authors
