@@ -21,8 +21,6 @@ if (string.IsNullOrEmpty(jwtSecret))
     throw new InvalidOperationException("Invalid JWT");
 }
 
-var key = Encoding.UTF8.GetBytes(jwtSecret);
-
 builder.Services.AddAuthentication(cfg =>
 {
     cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
