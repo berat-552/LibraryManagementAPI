@@ -41,8 +41,9 @@ public class AuthenticationHandlerTests
         Assert.False(string.IsNullOrEmpty(token));
         Assert.NotNull(jwtToken);
 
-        Assert.Equal(user.Id.ToString(), jwtToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-        Assert.Equal(user.Username, jwtToken.Claims.First(c => c.Type == ClaimTypes.Name).Value);
+        Assert.Equal(user.Id.ToString(), jwtToken.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+        Assert.Equal(user.Username, jwtToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value);
+        Assert.Equal(user.Email, jwtToken.Claims.First(claim => claim.Type == ClaimTypes.Email).Value);
     }
 
     [Fact]
