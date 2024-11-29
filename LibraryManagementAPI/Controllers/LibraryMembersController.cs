@@ -5,6 +5,7 @@ using LibraryManagementAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace LibraryManagementAPI.Controllers;
 
@@ -19,8 +20,15 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
     [Authorize]
     public async Task<ActionResult<LibraryMember>> GetLibraryMemberById(int id)
     {
-        var libraryMember = await _context.LibraryMembers.FindAsync(id);
+        var authenticatedUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var isNotAuthorized = authenticatedUserId == null || authenticatedUserId != id.ToString();
 
+        if (isNotAuthorized)
+        {
+            return Forbid();
+        }
+
+        var libraryMember = await _context.LibraryMembers.FindAsync(id);
         if (libraryMember == null)
         {
             return NotFound();
@@ -47,7 +55,6 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
         return CreatedAtAction(nameof(GetLibraryMemberById), new { id = libraryMember.Id }, libraryMember);
     }
 
-    // define login endpoint, JWT stuff etc
     [HttpPost("login")]
     public async Task<ActionResult> LoginLibraryMember([FromBody] LoginModel loginModel)
     {
@@ -58,13 +65,22 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
             return Unauthorized();
         }
 
-        var token = _authenticationHandler.GenerateJWTToken(libraryMember); return Ok(new { Token = token });
+        var token = _authenticationHandler.GenerateJWTToken(libraryMember);
+        return Ok(new { Token = token });
     }
 
     [HttpPut("{id}")]
     [Authorize]
     public async Task<ActionResult<LibraryMember>> UpdateLibraryMember(int id, [FromBody] LibraryMember libraryMember)
     {
+        var authenticatedUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var isNotAuthorized = authenticatedUserId == null || authenticatedUserId != id.ToString();
+
+        if (isNotAuthorized)
+        {
+            return Forbid();
+        }
+
         var existingMember = await _context.LibraryMembers.FindAsync(id);
         if (existingMember == null)
         {
@@ -95,6 +111,14 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
     [Authorize]
     public async Task<IActionResult> DeleteLibraryMember(int id)
     {
+        var authenticatedUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var isNotAuthorized = authenticatedUserId == null || authenticatedUserId != id.ToString();
+
+        if (isNotAuthorized)
+        {
+            return Forbid();
+        }
+
         var member = await _context.LibraryMembers.FindAsync(id);
         if (member == null)
         {
