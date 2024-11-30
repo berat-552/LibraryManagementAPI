@@ -109,53 +109,78 @@ Once authorized, you can make authenticated requests to the protected endpoints.
 
 ## Endpoints
 
-#### Get all Authors
+#### Get all Authors (Authorized)
 ```bash
 GET /api/v1/authors
 ```
 
-#### Create a new Author
+#### Create a new Author (Authorized)
 ```bash
 POST /api/v1/authors
 ```
 
-#### Get an Author by ID
+#### Get an Author by ID (Authorized)
 ```bash
 GET /api/v1/authors/{id}
 ```
 
-#### Update an Author
+#### Update an Author (Authorized)
 ```bash
 PUT /api/v1/authors/{id}
 ```
 
-#### Delete an Author
+#### Delete an Author (Authorized)
 ```bash
 DELETE /api/v1/authors/{id}
 ```
 ---
 
-#### Get all Books
+#### Get all Books (Authorized)
 ```bash
 GET /api/v1/books
 ```
 
-#### Create a new book
+#### Create a new book (Authorized)
 ```bash
 POST /api/v1/books
 ```
 
-#### Get a Book by ID
+#### Get a Book by ID (Authorized)
 ```bash
 GET /api/v1/books/{id}
 ```
 
-#### Update a Book
+#### Update a Book (Authorized)
 ```bash
 PUT /api/v1/books{id}
 ```
 
-#### Delete an Author
+#### Delete an Author (Authorized)
 ```bash
 DELETE /api/v1/authors/{id}
+```
+---
+
+#### Get a Library Member by ID (Authorized)
+```bash
+GET /api/v1/librarymembers/{id}
+```
+
+#### Register a New Library Member
+```bash
+POST /api/v1/librarymembers/register
+```
+#### Login as a Library Member
+```bash
+POST /api/v1/librarymembers/login
+```
+
+#### Update a Library Member (Authorized)
+```bash
+PUT /api/v1/librarymembers/{id}
+```
+
+#### Delete a Library Member (Authorized)
+```bash
+DELETE /api/v1/librarymembers/{id}
 ```
