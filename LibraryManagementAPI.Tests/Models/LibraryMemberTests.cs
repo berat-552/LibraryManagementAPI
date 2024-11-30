@@ -1,4 +1,5 @@
-﻿using LibraryManagementAPI.Models;
+﻿using LibraryManagementAPI.Data;
+using LibraryManagementAPI.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Tests.Models
@@ -24,6 +25,17 @@ namespace Tests.Models
             Assert.Equal(string.Empty, member.Email);
             Assert.Equal(string.Empty, member.Password);
             Assert.Equal(0, member.Id);
+        }
+
+        [Fact]
+        public void SeedLibraryMembers_ShouldReturnListOfLibraryMembers()
+        {
+            var count = 6;
+            var members = SeedData.SeedLibraryMembers();
+
+            Assert.NotNull(members);
+            Assert.Equal(count, members.Count);
+            Assert.IsType<List<LibraryMember>>(members);
         }
 
         [Theory]
