@@ -91,6 +91,14 @@ Alternatively, use the test button in Visual Studio 2022 to run all tests.
 | `AuthorName`      | `string` | Name of the author                 |
 | `Biography` | `string` | Short biography of the author      |
 
+### Library Member
+| Field       | Type     | Description                        |
+|-------------|----------|------------------------------------|
+| `Id`        | `int`    | Unique identifier for the library member   |
+| `Username`      | `string` | The username of the library member     |
+| `Email` | `string` | The email address of the library member      |
+| `Password` | `string` | The password for the library member      |
+
 ## API Documentation
 The API is documented using Swagger, providing a UI to explore all endpoints and try them out.
 
