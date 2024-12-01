@@ -1,9 +1,9 @@
 ﻿using LibraryManagementAPI.Data;
+using LibraryManagementAPI.Interfaces;
 using LibraryManagementAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using LibraryManagementAPI.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryManagementAPI.Controllers;
 

@@ -60,7 +60,7 @@ public class AuthorsControllerSuccessTests
 
         var okResult = Assert.IsType<OkObjectResult>(response.Result);
         var authors = Assert.IsType<List<Author>>(okResult.Value);
-        
+
         Assert.NotEmpty(authors);
         Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
         Assert.Equal(quantity, authors.Count);

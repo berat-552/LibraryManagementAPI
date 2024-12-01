@@ -1,6 +1,4 @@
-﻿using LibraryManagementAPI.Models;
-
-namespace LibraryManagementAPI.Interfaces;
+﻿namespace LibraryManagementAPI.Interfaces;
 
 public interface IBook
 {
