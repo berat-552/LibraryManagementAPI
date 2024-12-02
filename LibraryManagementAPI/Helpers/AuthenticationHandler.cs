@@ -1,4 +1,5 @@
-﻿using LibraryManagementAPI.Models;
+﻿using LibraryManagementAPI.Interfaces;
+using LibraryManagementAPI.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace LibraryManagementAPI.Helpers;
 
-public class AuthenticationHandler(IConfiguration configuration)
+public class AuthenticationHandler(IConfiguration configuration) : IAuthenticationHandler
 {
     private readonly IConfiguration _configuration = configuration;
 
