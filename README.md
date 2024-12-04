@@ -113,7 +113,7 @@ Click on the Authorize button in the Swagger UI.
 Enter your JWT token in the Value box.
 Once authorized, you can make authenticated requests to the protected endpoints.
 
-![image](https://github.com/user-attachments/assets/37954b7d-5c9a-4ee9-8a85-8528cde90271)
+![{1ECA3369-EF7E-40D3-84D4-8B398A5735EE}](https://github.com/user-attachments/assets/a53bc489-6392-4e19-8614-3b524ef69236)
 
 ## Endpoints
 
