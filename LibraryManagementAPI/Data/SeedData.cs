@@ -160,42 +160,42 @@ public static class SeedData
                 Id = 74,
                 Username = "JaneDoe55",
                 Email = "jane.doe@gmail.com",
-                Password = PasswordHandler.HashPassword("janedoe123")
+                Password = PasswordHandler.HashPassword("janeDoe123?")
             },
             new LibraryMember
             {
                 Id = 24,
                 Username = "JohnSmith33",
                 Email = "john.smith@example.com",
-                Password = PasswordHandler.HashPassword("johnsmith123")
+                Password = PasswordHandler.HashPassword("johnSmith123/")
             },
             new LibraryMember
             {
                 Id = 12,
                 Username = "AliceJohnson22",
                 Email = "alice.johnson@example.com",
-                Password = PasswordHandler.HashPassword("alicejohnson123")
+                Password = PasswordHandler.HashPassword("aliceJohnson123!")
             },
             new LibraryMember
             {
                 Id = 45,
                 Username = "BobBrown11",
                 Email = "bob.brown@example.com",
-                Password = PasswordHandler.HashPassword("bobbrown123")
+                Password = PasswordHandler.HashPassword("bobBrown123)*")
             },
             new LibraryMember
             {
                 Id = 5,
                 Username = "CharlieClark77",
                 Email = "charlie.clark@example.com",
-                Password = PasswordHandler.HashPassword("charlieclark123")
+                Password = PasswordHandler.HashPassword("charlieClark123&^")
             },
             new LibraryMember
             {
                 Id = 21,
                 Username = "EveAdams88",
                 Email = "eve.adams@example.com",
-                Password = PasswordHandler.HashPassword("eveadams123")
+                Password = PasswordHandler.HashPassword("eveAdams123#$")
             }
         ];
 }
