@@ -39,7 +39,7 @@ namespace Tests.Models
         }
 
         [Theory]
-        [InlineData("john_doe", "john.doe@example.com", "securePassword123")]
+        [InlineData("john_doe", "john.doe@example.com", "securePassword123!$#")]
         public void LibraryMember_WithValidData_ShouldPassValidation(string username, string email, string password)
         {
             var member = CreateLibraryMember(username, email, password);
@@ -57,6 +57,10 @@ namespace Tests.Models
         [InlineData("john_doe", "john.doe@example.com", "")] // Empty password
         [InlineData("john_doe", "invalid-email", "securePassword123")] // Invalid email
         [InlineData("john_doe", "john.doe@example.com", "short")] // Password too short
+        [InlineData("john_doe", "john.doe@example.com", "NoSpecialChar1")] // No special character
+        [InlineData("john_doe", "john.doe@example.com", "nouppercase1!")] // No uppercase letter
+        [InlineData("john_doe", "john.doe@example.com", "NOLOWERCASE1!")] // No lowercase letter
+        [InlineData("john_doe", "john.doe@example.com", "NoNumber!")] // No number
         public void LibraryMember_WithInvalidData_ShouldFailValidation(string username, string email, string password)
         {
             var member = CreateLibraryMember(username, email, password);

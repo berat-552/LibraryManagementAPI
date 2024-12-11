@@ -91,7 +91,7 @@ public class AuthorsControllerFailTests
         _controller.ModelState.AddModelError("AuthorName", "authorName must be between 1 and 100 characters");
 
         var response = await _controller.UpdateAuthor(authorToUpdate.Id, authorToUpdate);
-        var badRequestResult = Assert.IsType<BadRequestResult>(response);
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(response);
 
         Assert.NotNull(badRequestResult);
         Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);

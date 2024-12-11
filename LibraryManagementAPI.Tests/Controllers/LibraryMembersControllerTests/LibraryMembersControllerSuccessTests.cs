@@ -103,7 +103,7 @@ public class LibraryMembersControllerSuccessTests
         var loginModel = new LoginModel
         {
             Email = "jane.doe@gmail.com",
-            Password = "janedoe123"
+            Password = "janeDoe123?"
         };
 
         var libraryMember = await _context.LibraryMembers.FirstOrDefaultAsync(member => member.Email == loginModel.Email);
