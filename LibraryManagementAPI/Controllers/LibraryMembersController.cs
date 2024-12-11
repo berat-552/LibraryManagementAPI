@@ -47,6 +47,11 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
             return Conflict();
         }
 
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         libraryMember.Password = PasswordHandler.HashPassword(libraryMember.Password);
 
         _context.LibraryMembers.Add(libraryMember);
