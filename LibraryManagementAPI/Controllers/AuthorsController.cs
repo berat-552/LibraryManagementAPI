@@ -80,9 +80,14 @@ public class AuthorsController(LibraryContext context) : ControllerBase, IAuthor
     [Authorize]
     public async Task<IActionResult> UpdateAuthor(int id, [FromBody] Author author)
     {
-        if (id != author.Id || !ModelState.IsValid)
+        if (id != author.Id)
         {
             return BadRequest();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
         }
 
         // Detach the existing entity if it's already being tracked
