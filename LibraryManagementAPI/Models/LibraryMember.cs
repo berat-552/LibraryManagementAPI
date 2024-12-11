@@ -18,6 +18,6 @@ public class LibraryMember : ILibraryMember
     public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "password is required")]
-    [StringLength(50, MinimumLength = 8, ErrorMessage = "password must be between 1 and 50 characters")]
+    [Password]
     public string Password { get; set; } = string.Empty;
 }
