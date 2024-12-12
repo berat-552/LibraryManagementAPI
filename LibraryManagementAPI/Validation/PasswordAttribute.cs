@@ -6,6 +6,7 @@ namespace LibraryManagementAPI.Validation;
 public class PasswordAttribute : ValidationAttribute
 {
     private const string Pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?"":{}|<>])[A-Za-z\d!@#$%^&*(),.?"":{}|<>]{8,}$";
+
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         if (value == null)
