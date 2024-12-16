@@ -1,23 +1,22 @@
-﻿using LibraryManagementAPI.Data;
-using LibraryManagementAPI.Interfaces;
-using LibraryManagementAPI.Models;
+﻿using LibraryManagementAPI.Models;
+using LibraryManagementAPI.Responses;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class BooksController(LibraryContext context) : ControllerBase, IBooksController
+public class BooksController(BookService bookService) : ControllerBase
 {
-    private readonly LibraryContext _context = context;
+    private readonly BookService _bookService = bookService;
 
     [HttpGet]
     [Authorize]
     public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
     {
-        var books = await _context.Books.ToListAsync();
+        var books = await _bookService.GetAllBooks();
         if (books == null || books.Count == 0)
         {
             return NotFound();
@@ -35,28 +34,27 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
             return BadRequest();
         }
 
-        var books = await _context.Books.ToListAsync();
+        var (books, partialData) = await _bookService.GetQuantityOfBooks(quantity);
 
-        if (!quantity.HasValue)
+        if (partialData)
         {
-            return Ok(books);
+            var response = new PartialResponse<Book>
+            {
+                PartialData = true,
+                Items = books
+            };
+
+            return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        if (quantity.Value > books.Count)
-        {
-            var partialQuantityBooks = books.Take(quantity.Value).ToList();
-            return StatusCode(StatusCodes.Status206PartialContent, partialQuantityBooks);
-        }
-
-        var quantityWanted = books.Take(quantity.Value).ToList();
-        return Ok(quantityWanted);
+        return Ok(books);
     }
 
     [HttpGet("{id}")]
     [Authorize]
     public async Task<ActionResult<Book>> GetBookById(int id)
     {
-        var book = await _context.Books.FindAsync(id);
+        var book = await _bookService.GetBookById(id);
 
         if (book == null)
         {
@@ -70,16 +68,12 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
     [Authorize]
     public async Task<ActionResult<Book>> CreateBook([FromBody] Book book)
     {
-        var existingBook = await _context.Books
-       .FirstOrDefaultAsync(b => b.ISBN == book.ISBN);
+        var createdBook = await _bookService.CreateNewBook(book);
 
-        if (existingBook != null)
+        if (createdBook == null)
         {
             return Conflict(new { message = $"A book with the ISBN: {book.ISBN} already exists." });
         }
-
-        _context.Books.Add(book);
-        await _context.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
     }
@@ -93,31 +87,24 @@ public class BooksController(LibraryContext context) : ControllerBase, IBooksCon
             return BadRequest();
         }
 
-        // Detach the existing entity if it's already being tracked
-        var existingBook = await _context.Books.FindAsync(id);
-        if (existingBook != null)
+        var updatedBook = await _bookService.UpdateExistingBook(id, book);
+        if (updatedBook == null)
         {
-            _context.Entry(existingBook).State = EntityState.Detached;
+            return BadRequest();
         }
 
-        _context.Entry(book).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-
-        return Ok(book);
+        return Ok(updatedBook);
     }
 
     [HttpDelete("{id}")]
     [Authorize]
     public async Task<IActionResult> DeleteBook(int id)
     {
-        var book = await _context.Books.FindAsync(id);
+        var book = await _bookService.DeleteExistingBook(id);
         if (book == null)
         {
             return NotFound();
         }
-
-        _context.Books.Remove(book);
-        await _context.SaveChangesAsync();
 
         return NoContent();
     }

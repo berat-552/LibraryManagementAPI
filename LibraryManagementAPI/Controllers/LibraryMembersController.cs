@@ -1,20 +1,17 @@
-﻿using LibraryManagementAPI.Data;
-using LibraryManagementAPI.Helpers;
-using LibraryManagementAPI.Interfaces;
-using LibraryManagementAPI.Models;
+﻿using LibraryManagementAPI.Models;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace LibraryManagementAPI.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class LibraryMembersController(LibraryContext context, AuthenticationHandler authenticationHandler) : ControllerBase, ILibraryMembersController
+public class LibraryMembersController(LibraryMemberService libraryMemberService) : ControllerBase
 {
-    private readonly LibraryContext _context = context;
-    private readonly AuthenticationHandler _authenticationHandler = authenticationHandler;
+    private readonly LibraryMemberService _libraryMemberService = libraryMemberService;
+
 
     [HttpGet("{id}")]
     [Authorize]
@@ -28,7 +25,7 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
             return Forbid();
         }
 
-        var libraryMember = await _context.LibraryMembers.FindAsync(id);
+        var libraryMember = await _libraryMemberService.GetLibraryMemberById(id);
         if (libraryMember == null)
         {
             return NotFound();
@@ -40,9 +37,9 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
     [HttpPost("register")]
     public async Task<ActionResult<LibraryMember>> RegisterLibraryMember([FromBody] LibraryMember libraryMember)
     {
-        var existingLibraryMember = _context.LibraryMembers.FirstOrDefault(member => member.Email == libraryMember.Email);
+        var newLibraryMember = await _libraryMemberService.RegisterNewLibraryMember(libraryMember);
 
-        if (existingLibraryMember != null)
+        if (newLibraryMember == null)
         {
             return Conflict();
         }
@@ -52,25 +49,19 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
             return BadRequest(ModelState);
         }
 
-        libraryMember.Password = PasswordHandler.HashPassword(libraryMember.Password);
-
-        _context.LibraryMembers.Add(libraryMember);
-        await _context.SaveChangesAsync();
-
         return CreatedAtAction(nameof(GetLibraryMemberById), new { id = libraryMember.Id }, libraryMember);
     }
 
     [HttpPost("login")]
     public async Task<ActionResult> LoginLibraryMember([FromBody] LoginModel loginModel)
     {
-        var libraryMember = await _context.LibraryMembers.FirstOrDefaultAsync(member => member.Email == loginModel.Email);
+        var token = await _libraryMemberService.LoginLibraryMember(loginModel);
 
-        if (libraryMember == null || !PasswordHandler.VerifyPassword(loginModel.Password, libraryMember.Password))
+        if (token == null)
         {
             return Unauthorized();
         }
 
-        var token = _authenticationHandler.GenerateJWTToken(libraryMember);
         return Ok(new { Token = token });
     }
 
@@ -86,30 +77,14 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
             return Forbid();
         }
 
-        var existingMember = await _context.LibraryMembers.FindAsync(id);
-        if (existingMember == null)
+        var updatedMember = await _libraryMemberService.UpdateExistingLibraryMember(id, libraryMember);
+
+        if (updatedMember == null)
         {
             return NotFound();
         }
 
-        existingMember.Username = libraryMember.Username;
-        existingMember.Email = libraryMember.Email;
-
-
-        /* isPasswordChanged will be true if the passwords do not match (indicating that the password has changed)
-        * If they are the same, set isPasswordChanged to false.
-        * If they are different, set isPasswordChanged to true. */
-        var isPasswordChanged = !PasswordHandler.VerifyPassword(libraryMember.Password, existingMember.Password);
-
-        if (isPasswordChanged)
-        {
-            existingMember.Password = PasswordHandler.HashPassword(libraryMember.Password);
-        }
-
-        _context.LibraryMembers.Update(existingMember);
-        await _context.SaveChangesAsync();
-
-        return Ok(existingMember);
+        return Ok(updatedMember);
     }
 
     [HttpDelete("{id}")]
@@ -124,14 +99,11 @@ public class LibraryMembersController(LibraryContext context, AuthenticationHand
             return Forbid();
         }
 
-        var member = await _context.LibraryMembers.FindAsync(id);
+        var member = await _libraryMemberService.DeleteExistingLibraryMember(id);
         if (member == null)
         {
             return NotFound();
         }
-
-        _context.LibraryMembers.Remove(member);
-        await _context.SaveChangesAsync();
 
         return NoContent();
     }
