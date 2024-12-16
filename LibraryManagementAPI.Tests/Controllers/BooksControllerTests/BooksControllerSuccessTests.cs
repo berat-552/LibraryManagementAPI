@@ -1,6 +1,8 @@
 ﻿using LibraryManagementAPI.Controllers;
 using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Models;
+using LibraryManagementAPI.Responses;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ namespace Tests.Controllers.BooksControllerTests;
 public class BooksControllerSuccessTests
 {
     private readonly BooksController _controller;
+    private readonly BookService _bookService;
     private readonly LibraryContext _context;
     private readonly ITestOutputHelper _output; // Debug purposes
 
@@ -34,7 +37,8 @@ public class BooksControllerSuccessTests
         _context.Books.AddRange(SeedData.SeedBooks());
         _context.SaveChanges();
 
-        _controller = new BooksController(_context);
+        _bookService = new BookService(_context);
+        _controller = new BooksController(_bookService);
         _output = output;
     }
 
@@ -72,11 +76,12 @@ public class BooksControllerSuccessTests
         var response = await _controller.GetBooksByQuantity(quantity);
 
         var okResult = Assert.IsType<ObjectResult>(response.Result);
-        var books = Assert.IsType<List<Book>>(okResult.Value);
+        var responseObject = Assert.IsType<PartialResponse<Book>>(okResult.Value);
 
-        Assert.NotEmpty(books);
-        Assert.Equal(StatusCodes.Status206PartialContent, okResult.StatusCode);
-        Assert.NotEqual(quantity, books.Count);
+        Assert.NotEmpty(responseObject.Items);
+        Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+        Assert.True(responseObject.PartialData);
+        Assert.NotEqual(quantity, responseObject.Items.Count);
     }
 
     [Fact]
@@ -98,7 +103,7 @@ public class BooksControllerSuccessTests
         var bookToCreate = new Book
         {
             BookTitle = "The Great Adventure",
-            ISBN = "123-4567890123",
+            ISBN = "123-4567892123",
             Genre = "Fantasy",
             PublishedDate = new DateTime(2020, 5, 15),
             AuthorId = 42

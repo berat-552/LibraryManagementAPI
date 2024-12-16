@@ -2,6 +2,7 @@
 using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Helpers;
 using LibraryManagementAPI.Models;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +16,10 @@ public class LibraryMembersControllerSuccessTests
 {
     private readonly LibraryMembersController _controller;
     private readonly LibraryContext _context;
+    private readonly LibraryMemberService _libraryMemberService;
     private readonly ITestOutputHelper _output; // Debug purposes
     private readonly IConfiguration _configuration;
+
     public LibraryMembersControllerSuccessTests(ITestOutputHelper output)
     {
         var dbName = Guid.NewGuid().ToString();
@@ -48,8 +51,8 @@ public class LibraryMembersControllerSuccessTests
 
         var authenticationHandler = new AuthenticationHandler(_configuration);
 
-        // Initialize the controller with the test database context
-        _controller = new LibraryMembersController(_context, authenticationHandler);
+        _libraryMemberService = new LibraryMemberService(_context, authenticationHandler);
+        _controller = new LibraryMembersController(_libraryMemberService);
         _output = output;
     }
 
@@ -107,7 +110,7 @@ public class LibraryMembersControllerSuccessTests
         };
 
         var libraryMember = await _context.LibraryMembers.FirstOrDefaultAsync(member => member.Email == loginModel.Email);
-        
+
         var response = await _controller.LoginLibraryMember(loginModel);
         var okResult = Assert.IsType<OkObjectResult>(response);
         Assert.IsType<string>(okResult.Value?.ToString());
@@ -117,7 +120,7 @@ public class LibraryMembersControllerSuccessTests
     [Fact]
     public async Task UpdateLibraryMember_ReturnsOk_WhenAuthorized()
     {
-        var memberId = 74; 
+        var memberId = 74;
         var user = new ClaimsPrincipal(new ClaimsIdentity(
         [
             new Claim(ClaimTypes.NameIdentifier, memberId.ToString())

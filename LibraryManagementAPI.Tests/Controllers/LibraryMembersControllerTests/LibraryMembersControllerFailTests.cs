@@ -2,6 +2,7 @@
 using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Helpers;
 using LibraryManagementAPI.Models;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,11 @@ namespace Tests.Controllers.LibraryMembersControllerTests;
 public class LibraryMembersControllerFailTests
 {
     private readonly LibraryMembersController _controller;
+    private readonly LibraryMemberService _libraryMemberService;
     private readonly LibraryContext _context;
     private readonly ITestOutputHelper _output; // Debug purposes
     private readonly IConfiguration _configuration;
+
     public LibraryMembersControllerFailTests(ITestOutputHelper output)
     {
         var dbName = Guid.NewGuid().ToString();
@@ -48,8 +51,8 @@ public class LibraryMembersControllerFailTests
 
         var authenticationHandler = new AuthenticationHandler(_configuration);
 
-        // Initialize the controller with the test database context
-        _controller = new LibraryMembersController(_context, authenticationHandler);
+        _libraryMemberService = new LibraryMemberService(_context, authenticationHandler);
+        _controller = new LibraryMembersController(_libraryMemberService);
         _output = output;
     }
 

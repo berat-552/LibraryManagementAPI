@@ -1,6 +1,7 @@
 ﻿using LibraryManagementAPI.Controllers;
 using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Models;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace Tests.Controllers.BooksControllerTests;
 public class BooksControllerFailTests
 {
     private readonly BooksController _controller;
+    private readonly BookService _bookService;
     private readonly LibraryContext _context;
     private readonly ITestOutputHelper _output; // Debug purposes
 
@@ -34,7 +36,8 @@ public class BooksControllerFailTests
         _context.Books.AddRange(SeedData.SeedBooks());
         _context.SaveChanges();
 
-        _controller = new BooksController(_context);
+        _bookService = new BookService(_context);
+        _controller = new BooksController(_bookService);
         _output = output;
     }
 
@@ -51,6 +54,23 @@ public class BooksControllerFailTests
         Assert.Null(response.Value);
         Assert.IsNotType<List<Book>>(response.Value);
         Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task CreateBook_BookAlreadyExists_ReturnsConflict()
+    {
+        var bookToCreate = new Book
+        {
+            BookTitle = "Harry Potter and the Philosopher's Stone",
+            ISBN = "9780747532699",
+            Genre = "Fantasy",
+            PublishedDate = new DateTime(1997, 6, 26),
+            AuthorId = 31
+        };
+
+        var response = await _controller.CreateBook(bookToCreate);
+        var conflictResult = Assert.IsType<ConflictObjectResult>(response.Result);
+        Assert.Equal(StatusCodes.Status409Conflict, conflictResult.StatusCode);
     }
 
     private const int InvalidBookId = 999;

@@ -1,6 +1,7 @@
 ﻿using LibraryManagementAPI.Controllers;
 using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Models;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace Tests.Controllers.AuthorsControllerTests;
 public class AuthorsControllerFailTests
 {
     private readonly AuthorsController _controller;
+    private readonly AuthorService _authorService;
     private readonly LibraryContext _context;
     private readonly ITestOutputHelper _output; // Debug purposes
 
@@ -34,8 +36,8 @@ public class AuthorsControllerFailTests
         _context.Authors.AddRange(SeedData.SeedAuthors());
         _context.SaveChanges();
 
-        // Initialize the controller with the test database context
-        _controller = new AuthorsController(_context);
+        _authorService = new AuthorService(_context);
+        _controller = new AuthorsController(_authorService);
         _output = output;
     }
 
@@ -78,6 +80,23 @@ public class AuthorsControllerFailTests
 
         Assert.Null(response.Value);
         Assert.IsNotType<List<Author>>(response.Value);
+        Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task CreateAuthor_InvalidAuthorReturnsBadRequest()
+    {
+        var authorToCreate = new Author
+        {
+            Biography = "John Doe is a prolific author known for his engaging novels."
+        };
+
+        _controller.ModelState.AddModelError("AuthorName", "authorName is required");
+        _controller.ModelState.AddModelError("AuthorName", "authorName must be between 1 and 100 characters");
+
+        var response = await _controller.CreateAuthor(authorToCreate);
+        var badRequestResult = Assert.IsType<BadRequestResult>(response.Result);
+
         Assert.Equal(StatusCodes.Status400BadRequest, badRequestResult.StatusCode);
     }
 

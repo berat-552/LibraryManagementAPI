@@ -1,6 +1,8 @@
 using LibraryManagementAPI.Controllers;
 using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Models;
+using LibraryManagementAPI.Responses;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ namespace Tests.Controllers.AuthorsControllerTests;
 public class AuthorsControllerSuccessTests
 {
     private readonly AuthorsController _controller;
+    private readonly AuthorService _authorService;
     private readonly LibraryContext _context;
     private readonly ITestOutputHelper _output; // Debug purposes
 
@@ -35,7 +38,8 @@ public class AuthorsControllerSuccessTests
         _context.SaveChanges();
 
         // Initialize the controller with the test database context
-        _controller = new AuthorsController(_context);
+        _authorService = new AuthorService(_context);
+        _controller = new AuthorsController(_authorService);
         _output = output;
     }
 
@@ -73,11 +77,12 @@ public class AuthorsControllerSuccessTests
         var response = await _controller.GetAuthorsByQuantity(quantity);
 
         var okResult = Assert.IsType<ObjectResult>(response.Result);
-        var authors = Assert.IsType<List<Author>>(okResult.Value);
+        var responseObject = Assert.IsType<PartialResponse<Author>>(okResult.Value);
 
-        Assert.NotEmpty(authors);
-        Assert.Equal(StatusCodes.Status206PartialContent, okResult.StatusCode);
-        Assert.NotEqual(quantity, authors.Count);
+        Assert.NotEmpty(responseObject.Items);
+        Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+        Assert.True(responseObject.PartialData);
+        Assert.NotEqual(quantity, responseObject.Items.Count);
     }
 
     [Fact]
