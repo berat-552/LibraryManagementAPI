@@ -1,5 +1,6 @@
 using LibraryManagementAPI.Data;
 using LibraryManagementAPI.Helpers;
+using LibraryManagementAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,9 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add database context
 builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<AuthorService>();
+builder.Services.AddScoped<BookService>();
+builder.Services.AddScoped<LibraryMemberService>();
+
 // Register AuthenticationHandler
 builder.Services.AddScoped<AuthenticationHandler>();
-// Load JWT settings and configure JWT authentication
 var jwtSecret = builder.Configuration["JWT_Secret"];
 
 if (string.IsNullOrEmpty(jwtSecret))
