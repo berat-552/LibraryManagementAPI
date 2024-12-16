@@ -1,10 +1,9 @@
-﻿using LibraryManagementAPI.Interfaces;
-using LibraryManagementAPI.Validation;
+﻿using LibraryManagementAPI.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace LibraryManagementAPI.Models;
 
-public class LibraryMember : ILibraryMember
+public class LibraryMember
 {
     public int Id { get; set; }
 
