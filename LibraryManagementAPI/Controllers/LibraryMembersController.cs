@@ -12,7 +12,6 @@ public class LibraryMembersController(LibraryMemberService libraryMemberService)
 {
     private readonly LibraryMemberService _libraryMemberService = libraryMemberService;
 
-
     [HttpGet("{id}")]
     [Authorize]
     public async Task<ActionResult<LibraryMember>> GetLibraryMemberById(int id)
