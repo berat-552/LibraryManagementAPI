@@ -13,7 +13,7 @@ public class AuthorsControllerFailTests
 {
     private readonly AuthorsController _controller;
     private readonly AuthorService _authorService;
-    private readonly LibraryContext _context;
+    private readonly AppDbContext _context;
     private readonly ITestOutputHelper _output; // Debug purposes
 
     public AuthorsControllerFailTests(ITestOutputHelper output)
@@ -21,12 +21,12 @@ public class AuthorsControllerFailTests
         var dbName = Guid.NewGuid().ToString();
 
         // Configure in memory database options
-        var options = new DbContextOptionsBuilder<LibraryContext>()
+        var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: dbName)
             .Options;
 
         // Initialize the database context with the in-memory options
-        _context = new LibraryContext(options);
+        _context = new AppDbContext(options);
 
         // Clear the database before seeding it with test data
         _context.Database.EnsureDeleted();

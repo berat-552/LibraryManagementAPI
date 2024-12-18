@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Services;
 
-public class LibraryMemberService(LibraryContext context, AuthenticationHandler authenticationHandler)
+public class LibraryMemberService(AppDbContext context, AuthenticationHandler authenticationHandler)
 {
-    private readonly LibraryContext _context = context;
+    private readonly AppDbContext _context = context;
     private readonly AuthenticationHandler _authenticationHandler = authenticationHandler;
 
     public async Task<LibraryMember?> GetLibraryMemberById(int id)

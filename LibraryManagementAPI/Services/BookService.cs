@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Services;
 
-public class BookService(LibraryContext context)
+public class BookService(AppDbContext context)
 {
-    private readonly LibraryContext _context = context;
+    private readonly AppDbContext _context = context;
 
     public async Task<List<Book>> GetAllBooks() => await _context.Books.ToListAsync();
 

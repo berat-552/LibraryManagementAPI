@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Services;
 
-public class AuthorService(LibraryContext context)
+public class AuthorService(AppDbContext context)
 {
-    private readonly LibraryContext _context = context;
+    private readonly AppDbContext _context = context;
 
     public async Task<List<Author>> GetAllAuthors() => await _context.Authors.ToListAsync();
 
