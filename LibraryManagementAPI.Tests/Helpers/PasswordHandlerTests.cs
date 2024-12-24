@@ -4,34 +4,32 @@ namespace Tests.Helpers;
 
 public class PasswordHandlerTests
 {
+    private const string Password = "securePassword123";
+    
     [Fact]
     public void HashPassword_ShouldReturnHashedPassword()
     {
-        string password = "securePassword123";
-        string hashedPassword = PasswordHandler.HashPassword(password);
+        var hashedPassword = PasswordHandler.HashPassword(Password);
 
         Assert.False(string.IsNullOrEmpty(hashedPassword));
-        Assert.NotEqual(password, hashedPassword); // Ensure the hashed password is different from the original
+        Assert.NotEqual(Password, hashedPassword); // Ensure the hashed password is different from the original
     }
 
     [Fact]
     public void VerifyPassword_ShouldReturnTrue_ForValidPassword()
     {
-        string password = "securePassword123";
-        string hashedPassword = PasswordHandler.HashPassword(password);
-
-        bool isValid = PasswordHandler.VerifyPassword(password, hashedPassword);
+        var hashedPassword = PasswordHandler.HashPassword(Password);
+        var isValid = PasswordHandler.VerifyPassword(Password, hashedPassword);
         Assert.True(isValid);
     }
 
     [Fact]
     public void VerifyPassword_ShouldReturnFalse_ForInvalidPassword()
     {
-        string password = "securePassword123";
-        string wrongPassword = "wrongPassword123";
-        string hashedPassword = PasswordHandler.HashPassword(password);
+        const string wrongPassword = "wrongPassword123";
+        var hashedPassword = PasswordHandler.HashPassword(Password);
 
-        bool isValid = PasswordHandler.VerifyPassword(wrongPassword, hashedPassword);
+        var isValid = PasswordHandler.VerifyPassword(wrongPassword, hashedPassword);
         Assert.False(isValid);
     }
 }
