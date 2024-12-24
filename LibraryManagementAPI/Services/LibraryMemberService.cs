@@ -13,12 +13,7 @@ public class LibraryMemberService(AppDbContext context, AuthenticationHandler au
     public async Task<LibraryMember?> GetLibraryMemberById(int id)
     {
         var libraryMember = await _context.LibraryMembers.FindAsync(id);
-        if (libraryMember == null)
-        {
-            return null;
-        }
-
-        return libraryMember;
+        return libraryMember ?? null;
     }
 
     public async Task<LibraryMember?> RegisterNewLibraryMember(LibraryMember libraryMember)
