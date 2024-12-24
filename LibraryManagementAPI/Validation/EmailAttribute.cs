@@ -20,11 +20,6 @@ public class EmailAttribute : ValidationAttribute
         }
 
         var regex = new Regex(Pattern);
-        if (regex.IsMatch(email))
-        {
-            return ValidationResult.Success;
-        }
-
-        return new ValidationResult("Invalid email format.");
+        return regex.IsMatch(email) ? ValidationResult.Success : new ValidationResult("Invalid email format.");
     }
 }

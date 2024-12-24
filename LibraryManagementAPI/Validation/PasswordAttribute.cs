@@ -20,11 +20,6 @@ public class PasswordAttribute : ValidationAttribute
         }
 
         var regex = new Regex(Pattern);
-        if (regex.IsMatch(password))
-        {
-            return ValidationResult.Success;
-        }
-
-        return new ValidationResult("Password must contain at least 8 characters, one special character, one uppercase letter, one lowercase letter and one number.");
+        return regex.IsMatch(password) ? ValidationResult.Success : new ValidationResult("Password must contain at least 8 characters, one special character, one uppercase letter, one lowercase letter and one number.");
     }
 }

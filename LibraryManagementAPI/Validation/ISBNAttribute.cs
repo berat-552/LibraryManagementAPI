@@ -21,11 +21,6 @@ public class ISBNAttribute : ValidationAttribute
         }
 
         var regex = new Regex(Pattern);
-        if (regex.IsMatch(isbn))
-        {
-            return ValidationResult.Success;
-        }
-
-        return new ValidationResult("Invalid ISBN format.");
+        return regex.IsMatch(isbn) ? ValidationResult.Success : new ValidationResult("Invalid ISBN format.");
     }
 }
