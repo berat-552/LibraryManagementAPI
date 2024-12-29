@@ -9,21 +9,14 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add database context
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddScoped<AuthorService>();
 builder.Services.AddScoped<BookService>();
 builder.Services.AddScoped<LibraryMemberService>();
-
-// Register AuthenticationHandler
 builder.Services.AddScoped<AuthenticationHandler>();
-var jwtSecret = builder.Configuration["JWT_Secret"];
 
-if (string.IsNullOrEmpty(jwtSecret))
-{
-    throw new InvalidOperationException("Invalid JWT");
-}
+var jwtSecret = builder.Configuration["JWT_Secret"];
+if (string.IsNullOrEmpty(jwtSecret)) throw new InvalidOperationException("Invalid JWT");
 
 builder.Services.AddAuthentication(authOptions =>
 {
@@ -48,7 +41,6 @@ builder.Services.AddAuthentication(authOptions =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -83,7 +75,6 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -94,7 +85,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
