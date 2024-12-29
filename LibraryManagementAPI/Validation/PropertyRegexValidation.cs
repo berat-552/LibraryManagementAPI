@@ -10,8 +10,8 @@ public class PropertyRegexValidation(string regexPattern) : ValidationAttribute
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         if (value == null) return ValidationResult.Success; // Consider null as valid. Use [Required] for mandatory fields.
-        if (value is not string propertyValue) return new ValidationResult($"The field {validationContext.DisplayName} must be a string."); // if it is a string, assigns it to the variable isbn
-        
+        if (value is not string propertyValue) return new ValidationResult($"The field {validationContext.DisplayName} must be a string.");
+
         return _regex.IsMatch(propertyValue) ? ValidationResult.Success : new ValidationResult($"The field {validationContext.DisplayName} is not in the correct format.");
     }
 }
