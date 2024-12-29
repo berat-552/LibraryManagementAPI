@@ -75,7 +75,7 @@ public static class SeedData
             {
                 Id = 21,
                 BookTitle = "Harry Potter and the Philosopher's Stone",
-                ISBN = "9780747532699",
+                Isbn = "9780747532699",
                 Genre = "Fantasy",
                 PublishedDate = new DateTime(1997, 6, 26),
                 AuthorId = 31
@@ -84,7 +84,7 @@ public static class SeedData
             {
                 Id = 22,
                 BookTitle = "The Old Man and the Sea",
-                ISBN = "9780684830490",
+                Isbn = "9780684830490",
                 Genre = "Fiction",
                 PublishedDate = new DateTime(1952, 9, 1),
                 AuthorId = 32
@@ -93,7 +93,7 @@ public static class SeedData
             {
                 Id = 23,
                 BookTitle = "Murder on the Orient Express",
-                ISBN = "9780007119318",
+                Isbn = "9780007119318",
                 Genre = "Mystery",
                 PublishedDate = new DateTime(1934, 1, 1),
                 AuthorId = 33
@@ -102,7 +102,7 @@ public static class SeedData
             {
                 Id = 24,
                 BookTitle = "The Hobbit",
-                ISBN = "9780547928227",
+                Isbn = "9780547928227",
                 Genre = "Fantasy",
                 PublishedDate = new DateTime(1937, 9, 21),
                 AuthorId = 34
@@ -111,7 +111,7 @@ public static class SeedData
             {
                 Id = 25,
                 BookTitle = "The Great Gatsby",
-                ISBN = "9780743273565",
+                Isbn = "9780743273565",
                 Genre = "Fiction",
                 PublishedDate = new DateTime(1925, 4, 10),
                 AuthorId = 35
@@ -120,7 +120,7 @@ public static class SeedData
             {
                 Id = 26,
                 BookTitle = "1984",
-                ISBN = "9780451524935",
+                Isbn = "9780451524935",
                 Genre = "Dystopian",
                 PublishedDate = new DateTime(1949, 6, 8),
                 AuthorId = 36
@@ -129,7 +129,7 @@ public static class SeedData
             {
                 Id = 27,
                 BookTitle = "Pride and Prejudice",
-                ISBN = "9781503290563",
+                Isbn = "9781503290563",
                 Genre = "Romance",
                 PublishedDate = new DateTime(1813, 1, 28),
                 AuthorId = 37
@@ -138,7 +138,7 @@ public static class SeedData
             {
                 Id = 28,
                 BookTitle = "The Adventures of Tom Sawyer",
-                ISBN = "9780486400778",
+                Isbn = "9780486400778",
                 Genre = "Adventure",
                 PublishedDate = new DateTime(1876, 12, 1),
                 AuthorId = 38
@@ -147,7 +147,7 @@ public static class SeedData
             {
                 Id = 29,
                 BookTitle = "A Tale of Two Cities",
-                ISBN = "9781853260391",
+                Isbn = "9781853260391",
                 Genre = "Historical Fiction",
                 PublishedDate = new DateTime(1859, 4, 30),
                 AuthorId = 39

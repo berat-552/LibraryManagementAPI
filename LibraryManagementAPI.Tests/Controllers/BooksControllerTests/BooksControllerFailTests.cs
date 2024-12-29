@@ -62,7 +62,7 @@ public class BooksControllerFailTests
         var bookToCreate = new Book
         {
             BookTitle = "Harry Potter and the Philosopher's Stone",
-            ISBN = "9780747532699",
+            Isbn = "9780747532699",
             Genre = "Fantasy",
             PublishedDate = new DateTime(1997, 6, 26),
             AuthorId = 31

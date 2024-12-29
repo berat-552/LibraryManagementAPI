@@ -72,7 +72,7 @@ public class BooksController(BookService bookService) : ControllerBase
 
         if (createdBook == null)
         {
-            return Conflict(new { message = $"A book with the ISBN: {book.ISBN} already exists." });
+            return Conflict(new { message = $"A book with the ISBN: {book.Isbn} already exists." });
         }
 
         return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);

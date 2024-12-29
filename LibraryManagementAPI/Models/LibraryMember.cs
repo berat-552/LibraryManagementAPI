@@ -13,10 +13,10 @@ public class LibraryMember
 
     [Required(ErrorMessage = "email is required")]
     [StringLength(100, MinimumLength = 1, ErrorMessage = "email must be between 1 and 100 characters")]
-    [Email]
+    [PropertyRegexValidation(RegexPatterns.Email)]
     public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "password is required")]
-    [Password]
+    [PropertyRegexValidation(RegexPatterns.Password)]
     public string Password { get; set; } = string.Empty;
 }

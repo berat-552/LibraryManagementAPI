@@ -38,7 +38,7 @@ public class BookService(AppDbContext context)
     public async Task<Book?> CreateNewBook(Book book)
     {
         var existingBook = await _context.Books
-            .FirstOrDefaultAsync(b => b.ISBN == book.ISBN);
+            .FirstOrDefaultAsync(b => b.Isbn == book.Isbn);
 
         if (existingBook != null)
         {

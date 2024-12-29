@@ -12,8 +12,8 @@ public class Book
     public string BookTitle { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "isbn is required")]
-    [ISBN]
-    public string ISBN { get; set; } = string.Empty; // ISBN - International Standard Book Number
+    [PropertyRegexValidation(RegexPatterns.Isbn)]
+    public string Isbn { get; set; } = string.Empty; // ISBN - International Standard Book Number
 
     [Required(ErrorMessage = "genre is required")]
     [StringLength(100, MinimumLength = 1, ErrorMessage = "genre must be between 1 and 100 characters")]

@@ -11,7 +11,7 @@ public class BookTests
         return new Book
         {
             BookTitle = "Book",
-            ISBN = isbn,
+            Isbn = isbn,
             Genre = "Fiction",
             PublishedDate = DateTime.Now,
             AuthorId = 1
@@ -24,7 +24,7 @@ public class BookTests
         var book = new Book();
 
         Assert.Equal(string.Empty, book.BookTitle);
-        Assert.Equal(string.Empty, book.ISBN);
+        Assert.Equal(string.Empty, book.Isbn);
         Assert.Equal(string.Empty, book.Genre);
         Assert.Equal(default, book.PublishedDate);
         Assert.Equal(0, book.AuthorId);

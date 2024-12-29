@@ -103,7 +103,7 @@ public class BooksControllerSuccessTests
         var bookToCreate = new Book
         {
             BookTitle = "The Great Adventure",
-            ISBN = "123-4567892123",
+            Isbn = "123-4567892123",
             Genre = "Fantasy",
             PublishedDate = new DateTime(2020, 5, 15),
             AuthorId = 42
@@ -117,7 +117,7 @@ public class BooksControllerSuccessTests
         Assert.Equal(bookToCreate.BookTitle, createdBook.BookTitle);
         Assert.Equal(bookToCreate.Genre, createdBook.Genre);
         Assert.Equal(bookToCreate.PublishedDate, createdBook.PublishedDate);
-        Assert.Equal(bookToCreate.ISBN, createdBook.ISBN);
+        Assert.Equal(bookToCreate.Isbn, createdBook.Isbn);
     }
 
     [Fact]

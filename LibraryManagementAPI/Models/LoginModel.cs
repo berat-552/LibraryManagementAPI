@@ -6,7 +6,7 @@ namespace LibraryManagementAPI.Models;
 public class LoginModel
 {
     [Required(ErrorMessage = "Email is required")]
-    [Email(ErrorMessage = "Invalid email format")]
+    [PropertyRegexValidation(RegexPatterns.Email, ErrorMessage = "Invalid email format")]
     public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Password is required")]
