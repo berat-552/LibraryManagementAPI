@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Services;
 
-public class AuthorService(AppDbContext context)
+public sealed class AuthorService(AppDbContext context)
 {
     private readonly AppDbContext _context = context;
 

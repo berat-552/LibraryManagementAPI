@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Services;
 
-public class BookService(AppDbContext context)
+public sealed class BookService(AppDbContext context)
 {
     private readonly AppDbContext _context = context;
 

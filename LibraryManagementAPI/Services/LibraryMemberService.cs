@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Services;
 
-public class LibraryMemberService(AppDbContext context, AuthenticationHandler authenticationHandler)
+public sealed class LibraryMemberService(AppDbContext context, AuthenticationHandler authenticationHandler)
 {
     private readonly AppDbContext _context = context;
     private readonly AuthenticationHandler _authenticationHandler = authenticationHandler;

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace LibraryManagementAPI.Validation;
 
-public class PropertyRegexValidation(string regexPattern) : ValidationAttribute
+public sealed class PropertyRegexValidation(string regexPattern) : ValidationAttribute
 {
     private readonly Regex _regex = new(regexPattern, RegexOptions.Compiled);
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementAPI.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Book> Books { get; set; }
