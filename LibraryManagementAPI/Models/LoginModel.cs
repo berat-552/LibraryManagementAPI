@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LibraryManagementAPI.Models;
 
-public class LoginModel
+public sealed class LoginModel
 {
     [Required(ErrorMessage = "Email is required")]
     [PropertyRegexValidation(RegexPatterns.Email, ErrorMessage = "Invalid email format")]

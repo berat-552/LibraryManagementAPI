@@ -8,7 +8,7 @@ namespace LibraryManagementAPI.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class BooksController(BookService bookService) : ControllerBase
+public sealed class BooksController(BookService bookService) : ControllerBase
 {
     private readonly BookService _bookService = bookService;
 

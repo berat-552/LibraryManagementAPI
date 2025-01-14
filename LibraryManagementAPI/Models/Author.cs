@@ -2,7 +2,7 @@
 
 namespace LibraryManagementAPI.Models;
 
-public class Author
+public sealed class Author
 {
     public int Id { get; set; }
 

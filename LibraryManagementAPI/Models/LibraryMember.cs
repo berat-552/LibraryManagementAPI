@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LibraryManagementAPI.Models;
 
-public class LibraryMember
+public sealed class LibraryMember
 {
     public int Id { get; set; }
 
