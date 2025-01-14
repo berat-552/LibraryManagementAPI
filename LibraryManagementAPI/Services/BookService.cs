@@ -29,10 +29,10 @@ public class BookService(AppDbContext context)
         return (quantityWanted, false);
     }
 
-    public async Task<Book> GetBookById(int id)
+    public async Task<Book?> GetBookById(int id)
     {
         var book = await _context.Books.FindAsync(id);
-        return book!;
+        return book;
     }
 
     public async Task<Book?> CreateNewBook(Book book)

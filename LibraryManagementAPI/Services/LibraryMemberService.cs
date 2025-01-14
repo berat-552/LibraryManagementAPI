@@ -42,7 +42,7 @@ public class LibraryMemberService(AppDbContext context, AuthenticationHandler au
             return null; // Indicate unauthorized
         }
 
-        var token = _authenticationHandler.GenerateJWTToken(libraryMember);
+        var token = _authenticationHandler.GenerateJwtToken(libraryMember);
         return token;
     }
 

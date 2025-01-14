@@ -36,18 +36,14 @@ public class BooksController(BookService bookService) : ControllerBase
 
         var (books, partialData) = await _bookService.GetQuantityOfBooks(quantity);
 
-        if (partialData)
+        if (!partialData) return Ok(books);
+        var response = new PartialResponse<Book>
         {
-            var response = new PartialResponse<Book>
-            {
-                PartialData = true,
-                Items = books
-            };
+            PartialData = true,
+            Items = books
+        };
 
-            return StatusCode(StatusCodes.Status200OK, response);
-        }
-
-        return Ok(books);
+        return StatusCode(StatusCodes.Status200OK, response);
     }
 
     [HttpGet("{id}")]
@@ -56,10 +52,7 @@ public class BooksController(BookService bookService) : ControllerBase
     {
         var book = await _bookService.GetBookById(id);
 
-        if (book == null)
-        {
-            return NotFound();
-        }
+        if (book == null) return NotFound();
 
         return Ok(book);
     }

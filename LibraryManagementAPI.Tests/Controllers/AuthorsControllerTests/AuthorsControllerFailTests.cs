@@ -66,6 +66,7 @@ public class AuthorsControllerFailTests
 
         Assert.Null(response.Value);
         Assert.IsNotType<Author>(response.Value);
+        Assert.IsType<NotFoundResult>(notFoundResult);
         Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
     }
 

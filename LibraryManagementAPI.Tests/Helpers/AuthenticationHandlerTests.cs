@@ -34,7 +34,7 @@ public class AuthenticationHandlerTests
         };
 
         var authHandler = new AuthenticationHandler(_configuration);
-        var token = authHandler.GenerateJWTToken(user);
+        var token = authHandler.GenerateJwtToken(user);
         var tokenHandler = new JwtSecurityTokenHandler();
         var jwtToken = tokenHandler.ReadJwtToken(token);
 
@@ -68,6 +68,6 @@ public class AuthenticationHandlerTests
 
         var authHandler = new AuthenticationHandler(configuration);
 
-        Assert.Throws<InvalidOperationException>(() => authHandler.GenerateJWTToken(user));
+        Assert.Throws<InvalidOperationException>(() => authHandler.GenerateJwtToken(user));
     }
 }

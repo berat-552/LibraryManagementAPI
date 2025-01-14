@@ -11,7 +11,7 @@ public class AuthenticationHandler(IConfiguration configuration) : IAuthenticati
 {
     private readonly IConfiguration _configuration = configuration;
 
-    public string GenerateJWTToken(LibraryMember user)
+    public string GenerateJwtToken(LibraryMember user)
     {
         var claims = new List<Claim>
         {
