@@ -36,18 +36,18 @@ public sealed class AuthorsController(AuthorService authorService) : ControllerB
 
         var (authors, partialData) = await _authorService.GetQuantityOfAuthors(quantity);
 
-        if (partialData)
+        if (!partialData)
         {
-            var response = new PartialResponse<Author>
-            {
-                PartialData = true,
-                Items = authors
-            };
-
-            return StatusCode(StatusCodes.Status200OK, response);
+            return Ok(authors);
         }
 
-        return Ok(authors);
+        var response = new PartialResponse<Author>
+        {
+            PartialData = true,
+            Items = authors
+        };
+
+        return StatusCode(StatusCodes.Status200OK, response);
     }
 
     [HttpGet("{id}")]
