@@ -29,11 +29,7 @@ public sealed class AuthorService(AppDbContext context)
         return (quantityWanted, false);
     }
 
-    public async Task<Author> GetAuthorById(int id)
-    {
-        var author = await _context.Authors.FindAsync(id);
-        return author!;
-    }
+    public async Task<Author?> GetAuthorById(int id) => await _context.Authors.FindAsync(id) ?? null;
 
     public async Task<Author?> CreateNewAuthor(Author author)
     {
