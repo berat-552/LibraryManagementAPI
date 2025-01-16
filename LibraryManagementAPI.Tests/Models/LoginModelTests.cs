@@ -5,14 +5,11 @@ namespace Tests.Models;
 
 public class LoginModelTests
 {
-    private static LoginModel CreateLoginModel(string email, string password)
+    private static LoginModel CreateLoginModel(string email, string password) => new()
     {
-        return new LoginModel
-        {
-            Email = email,
-            Password = password
-        };
-    }
+        Email = email,
+        Password = password
+    };
 
     [Fact]
     public void LoginModel_ShouldHaveDefaultValues()

@@ -6,17 +6,14 @@ namespace Tests.Models;
 
 public class BookTests
 {
-    private static Book CreateBook(string isbn)
+    private static Book CreateBook(string isbn) => new()
     {
-        return new Book
-        {
-            BookTitle = "Book",
-            Isbn = isbn,
-            Genre = "Fiction",
-            PublishedDate = DateTime.Now,
-            AuthorId = 1
-        };
-    }
+        BookTitle = "Book",
+        Isbn = isbn,
+        Genre = "Fiction",
+        PublishedDate = DateTime.Now,
+        AuthorId = 1
+    };
 
     [Fact]
     public void Book_ShouldHaveDefaultValues()

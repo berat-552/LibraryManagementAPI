@@ -6,15 +6,12 @@ namespace Tests.Models;
 
 public class LibraryMemberTests
 {
-    private static LibraryMember CreateLibraryMember(string username, string email, string password)
+    private static LibraryMember CreateLibraryMember(string username, string email, string password) => new()
     {
-        return new LibraryMember
-        {
-            Username = username,
-            Email = email,
-            Password = password
-        };
-    }
+        Username = username,
+        Email = email,
+        Password = password
+    };
 
     [Fact]
     public void LibraryMember_ShouldHaveDefaultValues()
