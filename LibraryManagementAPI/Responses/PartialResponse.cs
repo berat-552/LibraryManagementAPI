@@ -1,7 +1,7 @@
 ﻿namespace LibraryManagementAPI.Responses;
 
-public sealed class PartialResponse<T>
+public sealed record PartialResponse<T>
 {
-    public bool PartialData { get; set; }
-    public List<T> Items { get; set; } = [];
+    public bool PartialData { get; init; }
+    public List<T> Items { get; init; } = [];
 }
